@@ -1,0 +1,128 @@
+﻿@model IEnumerable<FertilityPoint.DTO.ApplicationUserModule.ApplicationUserDTO>
+
+@{
+    ViewData["Title"] = "Index";
+
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
+}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.8.8/semantic.min.css" rel="stylesheet" />
+<link href="~/dashboard/dataTables//css/dataTables.semanticui.min.css" />
+<link href="~/dashboard/dataTables//css/semantic.min.css" />
+
+<div class="page-wrapper" style="min-height: 754px;background-color: #f8f9fa;">
+    <div class="content container-fluid">
+        <div class="row">
+            <div class="col-sm-7 col-auto">
+                <h3 class="page-title">List of Doctors</h3>
+
+            </div>
+        
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        @if (TempData["Error"] != null)
+                        {
+                            <div class="alert alert-danger" role="alert" id="error">
+                                @TempData["Error"].ToString()
+                            </div>
+                        }
+                        <table id="example" class="ui celled table table-bordered table-small" cellspacing="0" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>SN.</th>
+                                    <th>Name</th>
+                                    <th>Phone Number</th>
+                                    <th>Email</th>
+                                    <th>Speciality</th>
+                                    <th>Role</th>
+                                    <th>Member Since</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @if (Model != null && Model.Count() > 0)
+                                {
+                                    int count = 1;
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@count</td>
+                                            <td>
+                                                <a href="/Admin/UserManager/Profile/@item.Id">@item.FullName</a>
+
+                                            </td>
+                                            <td>@item.PhoneNumber</td>
+                                            <td>@item.Email</td>
+                                            <td>@item.SpecialityName</td>
+                                            <td>@item.RoleName</td>
+
+                                            <td>@item.CreateDate.ToShortDateString()</td>
+                                            <td>
+                                                @{
+                                                    var status = item.isActive;
+
+                                                    if (status == true)
+                                                    {
+                                                        <span class="activeUser ">Active</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="disabledUser ">Disabled</span>
+                                                    }
+                                                }
+                                            </td>
+
+                                            <td>
+                                                <a class="btn btn-success btn btn-sm" href="#" onclick="GetUser('@item.Id')" value=""><i class="fa fa-edit"></i></a>
+
+                                                <a class="btn btn-info btn btn-sm" href="#" onclick="ViewDetail('@item.Id')" value=""><i class="fa fa-eye"></i></a>
+
+                                            </td>
+
+                                        </tr>
+                                        count++;
+                                    }
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="~/dashboard/dataTables/js/jquery-3.5.1.js"></script>
+<script src="~/dashboard/dataTables/js/jquery.dataTables.min.js"></script>
+<script src="~/dashboard/dataTables/js/dataTables.semanticui.min.js"></script>
+<script src="~/dashboard/dataTables/js/semantic.min.js"></script>
+
+
+<script src="~/fertilitypoint/userRegistration.js"></script>
+
+<script type="text/javascript">
+
+
+    $(document).ready(function() {
+        var table = $('#example').DataTable({
+            responsive: true
+        });
+
+        //GetPostalCodes();
+    });
+
+</script>
+
+
+
+
+

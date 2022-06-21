@@ -1,0 +1,234 @@
+﻿
+
+
+
+
+
+<div class="modal fade" id="AppointmentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Book Your Appointment Now!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form class="custom-form" method="post" id="frmAppointments" name="contactForm">
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Name</label>
+                        <input type="text" class="form-control" id="txtName" aria-describedby="emailHelp" name="Name" placeholder="Enter your name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">PhoneNumber</label>
+                        <input type="text" class="form-control" id="txtPhoneNumber" aria-describedby="emailHelp" name="PhoneNumber" placeholder="Enter your Phone Number">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Email address</label>
+                        <input type="email" class="form-control" id="txtEmail" aria-describedby="emailHelp" name="Email" placeholder="Enter email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Date of Birth</label>
+                        <input type="date" class="form-control" id="txtDOB" aria-describedby="emailHelp" name="DateOfBirth" placeholder="Enter email">
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnSubmit">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="~/SweetAlart/sweetalert.min.css" rel="stylesheet" />
+<script src="~/SweetAlart/sweetalert.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+
+
+<script type="text/javascript">
+
+
+
+
+    function ShowLoader() {
+
+        $("#loadMe").modal('show');
+    }
+
+    function HideLoader() {
+
+        $("#loadMe").modal('hide');
+    }
+
+
+    $("#btnSubmit").click(function () {
+
+
+        if ($('#txtName').val() == '') {
+            $('#txtName').focus();
+            swal({
+                position: 'top-end',
+                type: "error",
+                title: "Name is a required field",
+                showConfirmButton: true,
+            });
+            return false;
+        }
+
+
+        if ($('#txtPhoneNumber').val() == '') {
+            $('#txtPhoneNumber').focus();
+            swal({
+                position: 'top-end',
+                type: "error",
+                title: "Phone Number is a required field",
+                showConfirmButton: true,
+            });
+            return false;
+        }
+
+        if ($('#txtEmail').val() == '') {
+            $('#txtEmail').focus();
+            swal({
+                position: 'top-end',
+                type: "error",
+                title: "Email is a required field",
+                showConfirmButton: true,
+            });
+            return false;
+        }
+
+        if ($('#txtDOB').val() == '') {
+            $('#txtDOB').focus();
+            swal({
+                position: 'top-end',
+                type: "error",
+                title: "Date of Birth is a required field",
+                showConfirmButton: true,
+            });
+            return false;
+        }
+
+
+        //$("#CreateLeadModal").modal('hide');
+
+        var data = $("#frmAppointments").serialize();
+
+        $.ajax({
+
+            type: "POST",
+
+            url: "/Appointment/Create/",
+
+            data: data,
+
+            beforeSend: function () { ShowLoader(); },
+
+            success: function (response) {
+
+                if (response.success) {
+
+                    swal({
+
+                        position: 'top-end',
+
+                        type: "success",
+
+                        title: response.responseText,
+
+                        showConfirmButton: false,
+
+                    }), setTimeout(function () { window.location = "/Home/"; }, 3000);
+
+                } else {
+
+                    swal({
+
+                        position: 'top-end',
+
+                        type: "error",
+
+                        title: response.responseText,
+
+                        showConfirmButton: true,
+
+                        timer: 5000,
+                    });
+
+
+                }
+            },
+
+            error: function (response) {
+                alert("error!");
+            },
+            complete: function () {
+                HideLoader();
+            }
+        })
+
+    })
+
+
+    function HomePage() {
+        window.location.href = "/Home/";
+    }
+
+
+
+
+
+    //Allow users to enter numbers only
+    $(".numericOnly").bind('keypress', function (e) {
+        if (e.keyCode == '9' || e.keyCode == '16') {
+            return;
+        }
+        var code;
+        if (e.keyCode) code = e.keyCode;
+        else if (e.which) code = e.which;
+        if (e.which == 46)
+            return false;
+        if (code == 8 || code == 46)
+            return true;
+        if (code < 48 || code > 57)
+            return false;
+    });
+
+    //Disable paste
+    $(".numericOnly").bind("paste", function (e) {
+        e.preventDefault();
+    });
+
+    $(".numericOnly").bind('mouseenter', function (e) {
+        var val = $(this).val();
+        if (val != '0') {
+            val = val.replace(/[^0-9]+/g, "")
+            $(this).val(val);
+        }
+    });
+</script>

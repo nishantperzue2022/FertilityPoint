@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FertilityPoint.DAL\FertilityPoint.DAL.csproj" />
+    <ProjectReference Include="..\FertilityPoint.DTO\FertilityPoint.DTO.csproj" />
+  </ItemGroup>
+
+</Project>
