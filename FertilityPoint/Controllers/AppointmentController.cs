@@ -82,7 +82,7 @@ namespace FertilityPoint.Controllers
         {
             try
             {
-                var timeslot = (await timeSlotRepository.GetAll()).OrderBy(x => x.FromTime);
+                var timeslot = (await timeSlotRepository.GetAll()).Where(x => x.IsBooked == 0).OrderByDescending(x => x.TimeSlot);
 
                 return View(timeslot);
             }
@@ -287,7 +287,7 @@ namespace FertilityPoint.Controllers
 
                         appointmentDTO.ReceiptURL = url;
 
-                        // var sendClientEmail = await mailService.AppointmentEmailNotification(appointmentDTO);
+                        var sendClientEmail = await mailService.AppointmentEmailNotification(appointmentDTO);
 
                         //var sendFertilityPointEmail = await mailService.FertilityPointEmailNotification(appointmentDTO);
 
@@ -327,13 +327,13 @@ namespace FertilityPoint.Controllers
 
                 var msisdn = formatPhoneNumber(PhoneNumber);
 
-                string url = @"https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest";
+                string url = @"https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest";
 
                 HttpClient client = new HttpClient();
 
-                var key = "gRv2DG2xCm5P8ZuhXorGSKlBmQ3MTucK";
+                var key = "QQGUDGoGV9WoXMbTzxPRMnguUkL8SqG5";
 
-                var secrete = "YENO5J5tGF9ptvic";
+                var secrete = "0HkuMBkfO00JIhF2";
 
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + await generateAccessToken(key, secrete));
 
@@ -341,7 +341,7 @@ namespace FertilityPoint.Controllers
 
                 var mpesaExpressRequestDTO = new MpesaExpressRequestDTO
                 {
-                    BusinessShortCode = 174379,
+                    BusinessShortCode = 328108,
 
                     Password = GeneratePassword(),
 
@@ -353,7 +353,7 @@ namespace FertilityPoint.Controllers
 
                     PartyA = msisdn,
 
-                    PartyB = 174379,
+                    PartyB = 328108,
 
                     PhoneNumber = msisdn,
 
@@ -418,9 +418,9 @@ namespace FertilityPoint.Controllers
             {
                 var lipa_time = DateTime.Now.ToString("yyyyMMddHHmmss");
 
-                var passkey = "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919";
+                var passkey = "c308930e0ea0919259e32eeaf0d04f10e79d26954f52eced2436c8a7ff2ed0fc";
 
-                int BusinessShortCode = 174379;
+                int BusinessShortCode = 328108;
 
                 var timestamp = lipa_time;
 
@@ -441,7 +441,7 @@ namespace FertilityPoint.Controllers
         {
             try
             {
-                var url = @"https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials";
+                var url = @"https://api.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials";
 
                 HttpClient client = new HttpClient();
 

@@ -140,7 +140,25 @@ namespace FertilityPoint.BLL.Repositories.MpesaStkModule
 
                 mpesaPaymentDTO.IsPaymentUsed = 0;
 
-                var transaction = mapper.Map<MpesaPayment>(mpesaPaymentDTO);
+                var transaction = new MpesaPayment
+                {
+                    CheckoutRequestID = mpesaPaymentDTO.CheckoutRequestID,
+
+                    MerchantRequestID = mpesaPaymentDTO.MerchantRequestID,
+
+                    ResultCode = mpesaPaymentDTO.ResultCode,
+
+                    ResultDesc = mpesaPaymentDTO.ResultDesc,
+
+                    Amount = mpesaPaymentDTO.Amount,
+
+                    TransactionNumber = mpesaPaymentDTO.TransactionNumber,
+
+                    TransactionDate = mpesaPaymentDTO.TransactionDate,
+
+                    PhoneNumber = mpesaPaymentDTO.PhoneNumber,
+                 
+                };
 
                 context.MpesaPayments.Add(transaction);
 

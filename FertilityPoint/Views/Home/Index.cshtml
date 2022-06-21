@@ -50,7 +50,53 @@
     </div>
 </div>
 <!-- Carousel End -->
+<!-- vertical Start -->
+
+<div class="">
+    <div class="slick-track" style="">
+    </div>
+</div>
+
+<div class="container">
+    <div class="aa">
+        <ul>
+            <li>
+
+                <strong>Success Rates:</strong>
+                <strong>IVF/ICSI</strong> - 55%-65%, <strong>IUI</strong> - 25% <span class="d-inline-block w-100">
+                    The success rates of IVF have been
+                    35-40% in the best of the labs and we have success rates of 55%-65%, which includes all age groups.
+                </span> <span class="d-inline-block w-100">
+                    The success rates of IUI have been a maximum of 15-20%
+                    and our IUI success rates are 25%.
+                </span>
+
+            </li>
+            <li>
+
+                <strong>Genetic Screening and Testing:</strong> We assist in providing Preimplantation Genetic Screening (PGS)
+                and Preimplantation Genetic Diagnosis
+                (PGD) tests to detect chromosomal abnormalities and genetic diseases in embryos.
+
+            </li>
+            <li>
+
+                PGD/PGS can detect chromosomal abnormalities especially in older age group patients and
+                recurrent implantation failure cases, where aneuploidies are common cause of failures.
+                Diseases like Sickle cell anemia and Thalassemia can be detected in embryos before transferring.
+                Hence, only the normal and healthy embryos devoid of the disease are transferred.
+                The only IVF centre offering this facility in Kenya.
+
+
+        </ul>
+    </div>
+
+</div>
+
+
+<!-- vertical end -->
 <!-- Feature Start -->
+
 <div class="container-xxl py-5">
     <div class="container">
         <div class="row g-5">
@@ -127,11 +173,11 @@
                     <p><i class="fa fa-check-circle text-primary me-3"></i>Surrogacy</p>
                     <p><i class="fa fa-check-circle text-primary me-3"></i>Egg Vitrification and much more..</p>
                     @*<p><i class="fa fa-check-circle text-primary me-3"></i>Laser Assisted Hatching</p>
-                        <p><i class="fa fa-check-circle text-primary me-3"></i>Blastocyst Culture</p>
-                        <p><i class="fa fa-check-circle text-primary me-3"></i>Frozen Embryo Transfer</p>
-                        <p><i class="fa fa-check-circle text-primary me-3"></i>Male Infertility</p>
-                        <p><i class="fa fa-check-circle text-primary me-3"></i>Laparoscopy Treatment</p>
-                        <p><i class="fa fa-check-circle text-primary me-3"></i> Diagnostic and Operative Hysteroscopy</p>*@
+                    <p><i class="fa fa-check-circle text-primary me-3"></i>Blastocyst Culture</p>
+                    <p><i class="fa fa-check-circle text-primary me-3"></i>Frozen Embryo Transfer</p>
+                    <p><i class="fa fa-check-circle text-primary me-3"></i>Male Infertility</p>
+                    <p><i class="fa fa-check-circle text-primary me-3"></i>Laparoscopy Treatment</p>
+                    <p><i class="fa fa-check-circle text-primary me-3"></i> Diagnostic and Operative Hysteroscopy</p>*@
 
 
                     <a href="" class="btn btn-primary rounded-pill py-3 px-5 mt-3">Explore More</a>
@@ -197,7 +243,6 @@
     </div>
 </div>
 <!-- Service End -->
-
 @*<div class="container-fluid bg-light overflow-hidden my-5 px-lg-0">
     <div class="container about px-lg-0">
         <div class="row g-0 mx-lg-0">
@@ -356,6 +401,46 @@
 
 <style>
 
+
+    ul {
+        list-style: none;
+        position: absolute;
+        top: 0;
+        left: 50px;
+        transition: all 0.5s ease;
+         height: 40px;
+    }
+
+    li {
+        height: 70px;
+    }
+
+    /*
+                            .container {
+                     
+                                position: relative;
+                            }
+*/
+    .aa {
+        height: 40px;
+        overflow: hidden;
+        display: inline-block;
+        position: relative;
+        width: 90%;
+    }
+
+    h1 {
+        display: inline;
+    }
+
+
+
+
+
+
+
+
+
     .et_pb_text_2 {
         font-family: 'Circular Std Medium',Helvetica,Arial,Lucida,sans-serif;
         background-color: #263b6b;
@@ -375,6 +460,7 @@
     .et_pb_text {
         word-wrap: break-word;
     }
+
     .et_pb_section_1.et_pb_section {
         background-color: #f4eff1 !important;
     }
@@ -398,3 +484,37 @@
         margin: -2px;
     }
 </style>
+
+<script>
+    $(document).ready(function() {
+
+        function scrollTxt(el, heightTxt) {
+            let v = $(el).css('top');
+            if (v != heightTxt) {
+                $(el).css({
+                    'transition': 'all 0.5s ease',
+                    '-webkit-transition': 'all 0.5s ease',
+                    '-o-transition': 'all 0.5s ease',
+                    'top': heightTxt
+                });
+                $(el).children('li').first().clone().appendTo(el);
+            }
+            else {
+                $(el).children('li').first().remove();
+                $(el).css({
+                    'transition': 'none',
+                    '-webkit-transition': 'none',
+                    '-o-transition': 'none',
+                    'top': '0'
+                });
+            }
+        }
+
+        const size = $('ul').children('li').height();
+
+
+        window.setInterval(() => {
+            scrollTxt('ul', -size + 'px')
+        }, 2000);
+    })
+</script>

@@ -171,7 +171,7 @@ b, strong {
 }
 
 small, .small {
- /*   font-size: .875em*/
+    /*   font-size: .875em*/
 }
 
 mark, .mark {
@@ -6776,7 +6776,7 @@ textarea.form-control-lg {
 }
 
 .border-dark {
-    border-color: #263b6b!important
+    border-color: #263b6b !important
 }
 
 .border-white {
@@ -7753,7 +7753,7 @@ textarea.form-control-lg {
 }
 
 .text-dark {
-    color: #263b6b!important
+    color: #263b6b !important
 }
 
 .text-white {
@@ -7809,7 +7809,7 @@ textarea.form-control-lg {
 }
 
 .bg-dark {
-    background-color: #263b6b!important
+    background-color: #263b6b !important
 }
 
 .bg-body {

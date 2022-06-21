@@ -1,4 +1,5 @@
 ﻿using FertilityPoint.BLL.Repositories.MpesaStkModule;
+using FertilityPoint.DAL.Modules;
 using FertilityPoint.DTO.MpesaStkModule;
 using Microsoft.AspNetCore.Mvc;
 using SkiCareHMS.Data.DTOs.MpesaStkModule;
@@ -10,9 +11,13 @@ namespace FertilityPoint.Controllers
     public class MpesaCallBackController : Controller
     {
         private readonly IPaymentRepository paymentRepository;
-        public MpesaCallBackController(IPaymentRepository paymentRepository)
+
+        private readonly ApplicationDbContext context;
+        public MpesaCallBackController(ApplicationDbContext context,IPaymentRepository paymentRepository)
         {
             this.paymentRepository = paymentRepository;
+
+            this.context = context;
         }
 
         public IActionResult Index()
@@ -44,15 +49,7 @@ namespace FertilityPoint.Controllers
 
                         PhoneNumber = darajaResponse.Body.stkCallback.CallbackMetadata.Item.Where(p => p.Name.Contains("PhoneNumber")).FirstOrDefault().Value.ToString(),
 
-                    };
-
-                    //var getCheckoutdetails = paymentService.GetCheckOutRequestResponseById(transaction.CheckoutRequestID);
-
-                    //var getPatient = patientService.GetById(getCheckoutdetails.PatientId);
-
-                    //transaction.FirstName = getPatient.FirstName;
-
-                    //transaction.LastName = getPatient.LastName;
+                    };           
 
                     paymentRepository.SaveSTKCallBackResponse(transaction);
 

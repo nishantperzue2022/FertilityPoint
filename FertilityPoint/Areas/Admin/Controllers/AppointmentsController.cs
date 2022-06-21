@@ -18,9 +18,19 @@ namespace FertilityPoint.Areas.Admin.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var appointments = (await appointmentRepository.GetAll()).OrderBy(x=>x.FullName);
+            var appointments = (await appointmentRepository.GetAll()).OrderBy(x => x.FullName);
 
             return View(appointments);
         }
+
+        public async Task<IActionResult> ApproveAppoinment()
+        {
+            var appointments = (await appointmentRepository.GetAll()).OrderBy(x => x.FullName);
+
+            return View(appointments);
+        }
+
+
+
     }
 }

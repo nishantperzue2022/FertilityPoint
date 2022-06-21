@@ -404,7 +404,7 @@ a.bg-danger:focus, a.bg-danger:hover, button.bg-danger:focus, button.bg-danger:h
 }
 
 .text-primary, .dropdown-menu > li > a.text-primary {
-    color: #09e5ab !important
+ /*   color: #09e5ab !important*/
 }
 
 .text-success, .dropdown-menu > li > a.text-success {
@@ -8229,7 +8229,7 @@ body .multi-optn {
     font-weight: 600;
     font-size: 22px;
     line-height: 27px;
-    color: #0071dc
+    color: #263b6b
 }
 
 .date-booking p {

@@ -109,9 +109,9 @@ div label input {
 
 .cat {
     margin: 4px;
-    background-color:#32c36c;
+    background-color: #263b6b;
     border-radius: 4px;
-    border: 1px solid #32c36c;
+    border: 1px solid #263b6b;
     overflow: hidden;
     float: left;
     border-radius: 8px;
@@ -119,8 +119,8 @@ div label input {
 }
 
     .cat:hover {
-        background-color: #263b6b;
-        border: 1px solid #263b6b;
+        background-color: #6e83b4;
+        border: 1px solid #6e83b4;
         color: #fff
     }
 
@@ -167,5 +167,6 @@ div label input {
 
 
 .action input:checked + span {
-    background-color: #F75A1B;
+    background-color: #808080;
+    border-block-color: #808080;
 }
