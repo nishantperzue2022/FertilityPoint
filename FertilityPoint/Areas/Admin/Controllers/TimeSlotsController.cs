@@ -24,7 +24,7 @@ namespace FertilityPoint.Areas.Admin.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var timeSlots =await timeSlotRepository.GetAll();
+            var timeSlots = await timeSlotRepository.GetAll();
 
             return View(timeSlots);
         }
@@ -109,28 +109,28 @@ namespace FertilityPoint.Areas.Admin.Controllers
             }
         }
 
-        public async Task<IActionResult> GetByIdAsync(Guid Id)
+        public async Task<IActionResult> GetById(Guid Id)
         {
             try
             {
-                var data = await timeSlotRepository.GetById(Id);
+                var timeslot = await timeSlotRepository.GetById(Id);
 
-                if (data != null)
+                if (timeslot != null)
                 {
-                    var timeslot = new TimeSlotDTO()
+                    TimeSlotDTO file = new TimeSlotDTO()
                     {
-                        Id = data.Id,
+                        Id = timeslot.Id,
 
-                        FromTime = data.FromTime,
+                        FromTime = timeslot.FromTime,
 
-                        ToTime = data.ToTime,
+                        ToTime = timeslot.ToTime,
 
-                        CreateBy = data.CreateBy,
+                        CreateBy = timeslot.CreateBy,
 
-                        UpdatedBy = data.UpdatedBy,
+                        UpdatedBy = timeslot.UpdatedBy,
                     };
 
-                    return Json(new { data = data });
+                    return Json(new { data = file });
                 }
                 return Json(new { data = false });
             }

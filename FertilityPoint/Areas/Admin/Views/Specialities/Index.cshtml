@@ -2,7 +2,6 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
-
 }
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
@@ -49,8 +48,8 @@
                                         <td>@item.CreateDate.ToShortDateString()</td>
 
                                         <td>
-                                            <a class="btn btn-sm bg-success-light" href="#" onclick="GetSpeciality('@item.Id')" value="">Edit</a>
-                                            <a class="btn btn-sm bg-danger-light" href="#" onclick="DeleteRecord('@item.Id')" value="">Delete</a>
+                                            <a class="btn btn-sm btn-success" href="#" onclick="GetSpeciality('@item.Id')" value="">Edit</a>
+                                            <a class="btn btn-sm btn-danger" href="#" onclick="DeleteRecord('@item.Id')" value="">Delete</a>
                                         </td>
                                     </tr>
                                     count++;

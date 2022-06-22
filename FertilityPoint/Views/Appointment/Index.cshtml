@@ -68,17 +68,14 @@
                                                             </label>
                                                         </div>
 
-                                                        @*
-                                                if (slotStatus == 1)
-                                                {
-                                                <div class="bookedSlot action">
-                                                <label>
-                                                <input class="txtTime" type="checkbox" disabled id="txtTime" name="TimeId" value="@item.Id">
-                                                <span>@item.TimeSlot</span>
-                                                </label>
-                                                </div>
-                                                }*@
                                                     }
+                                                }
+                                                else
+                                                {
+                                                    <div class="alert alert-danger" role="alert" id="error">
+                                                        There are no slots at the moment please check gain later
+                                                    </div>
+
                                                 }
                                             </div>
                                         </div>
@@ -88,7 +85,7 @@
 
                                 </div>
 
-       
+
 
                             </div>
                         </div>

@@ -31,7 +31,7 @@ function GetTimeSlotId() {
         console.log(data);
 
         if (data.data == false) {
-            alert("Does not exist");
+          /*  alert("Does not exist");*/
         } else {
 
             $("#txtId").val(data.data.id);

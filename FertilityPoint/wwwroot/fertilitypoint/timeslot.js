@@ -164,7 +164,7 @@ $("#btnEdit").click(function () {
 })
 
 
-function GetSpeciality(e) {
+function GetTimeSlot(e) {
 
     var id = e;
 
@@ -177,7 +177,8 @@ function GetSpeciality(e) {
         } else {
 
             $("#txtId").val(data.data.id);
-            $("#txtTime1").val(data.data.name);
+            $("#txtFromTime1").val(data.data.newFromTime);
+            $("#txtToTime1").val(data.data.newToTime);
 
             $('#modalTimeSlotUpdate').modal({ backdrop: 'static', keyboard: false })
 
