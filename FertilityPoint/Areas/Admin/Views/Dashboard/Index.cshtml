@@ -270,7 +270,7 @@
 
                                                 <td>
                                                     <h2 class="table-avatar">
-                                                        <a href="profile.html">@item.FullName </a>
+                                                        <a href="/Admin/Patients/Profile/@item.Id">@item.FullName </a>
                                                     </h2>
                                                 </td>
                                                 <td>@item.PhoneNumber</td>
@@ -295,7 +295,6 @@
 
         <div class="row">
             <div class="col-md-12">
-
                 <div class="card card-table">
                     <div class="card-header">
                         <h4 class="card-title">Appointment List</h4>
@@ -338,19 +337,17 @@
 
                                                         if (status == 0)
                                                         {
-                                                            <span class="pending">Pending Approval</span>
+                                                            <span class="pending">Pending</span>
                                                         }
                                                         else
                                                         {
-                                                            <span class="disabledUser ">Completed</span>
+                                                            <span class="activeUser ">Approved</span>
                                                         }
                                                     }
                                                 </td>
                                                 <td class="text-end">
-                                                    <a class="btn btn-sm bg-success-light" href="#" onclick="GetSpeciality('@item.Id')" value="">Approve</a>
-
+                                                    <a class="btn btn-success btn-sm " href="#" onclick="ApproveAppointment('@item.Id')" value="">Approve</a>
                                                 </td>
-
                                             </tr>
 
                                             count++;
@@ -378,7 +375,7 @@
         height: 24px;
         margin-bottom: 0;
         position: relative;
-        width: 148px;
+        width: 107px;
         color: white;
         text-align: center;
     }
@@ -390,7 +387,7 @@
         height: 24px;
         margin-bottom: 0;
         position: relative;
-        width: 75px;
+        width: 107px;
         color: white;
         text-align: center;
     }
@@ -402,8 +399,10 @@
         height: 24px;
         margin-bottom: 0;
         position: relative;
-        width: 75px;
+        width: 107px;
         color: white;
         text-align: center;
-    }
+
 </style>
+
+<script src="~/fertilitypoint/appointment.js"></script>

@@ -2,7 +2,6 @@
 
 @{
     ViewData["Title"] = "Index";
- 
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
@@ -18,8 +17,9 @@
                     <h3 class="page-title">List of Appointments</h3>
                 </div>
                 <div class="col-md-9">
-@*                    <button type="button" class="btn btn-success btn-sm  pull-right" data-toggle="modal" data-target="#exampleModal" data-backdrop="static" data-keyboard="false"><i class="fa fa-plus-circle"></i>  </button>
-*@                </div>
+                    @*                    <button type="button" class="btn btn-success btn-sm  pull-right" data-toggle="modal" data-target="#exampleModal" data-backdrop="static" data-keyboard="false"><i class="fa fa-plus-circle"></i>  </button>
+                    *@
+                </div>
             </div>
 
             <div class="card">
@@ -30,7 +30,6 @@
                             <tr>
                                 <th>SN.</th>
                                 <th>Patient Name</th>
-
                                 <th>Appointment Time</th>
                                 <th>Status</th>
                                 <th>Action</th>
@@ -62,100 +61,24 @@
                                                 }
                                                 else
                                                 {
-                                                    <span class="disabledUser ">Completed</span>
+                                                    <span class="activeUser ">Approved</span>
                                                 }
                                             }
                                         </td>
                                         <td class="text-end">
-                                            <a class="btn btn-success btn-sm " href="#" onclick="GetSpeciality('@item.Id')" value="">Approve</a>
-
+                                            <a class="btn btn-success btn-sm " href="#" onclick="ApproveAppointment('@item.Id')" value="">Approve</a>
                                         </td>
                                     </tr>
                                     count++;
                                 }
                             }
                         </tbody>
-
                     </table>
-
-
                 </div>
             </div>
         </div>
-
     </div>
-
-
-    <div class="modal fade" id="ModalApproval" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">
-                        Verify Claim
-                    </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body ">
-
-                    <form class="" id="frmApproveClaimMakl">
-                        <input type="hidden" name="Id" id="txtId" value="" />
-                        <div class="form-group row">
-
-                            <div class="bg-dark col-12 text-center text-white" style="width:100px;height:100px; font-size:20px;">
-                                <div class="text-center">
-                                    <label id="txtMemberNameApprove">   </label>
-                                    @*<img src="~/Content/icons/patient-phone-icon.png" class="ui image" style="display: inline; position: relative; top: -3px;">*@
-
-                                </div>
-                                <div class="">
-                                    <img src="~/Icons/patient-user-settings.png"
-                                         class="img" />
-                                </div>
-                            </div>
-                            <br />
-
-                            <div class="col-lg-12">
-
-                                <div class="text-dark" style="font-size:15px; font-weight:bold;">
-                                    <label id="NewCreateDate"></label>
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-lg-12">
-                                <h6>
-                                    Remarks
-                                </h6>
-                                <div>
-                                    <textarea class="form-control" style="height:10em;" id="txtDoshComment" name="MaklComment"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-
-                </div>
-                <div class="modal-footer" id="divApprove">
-                    <button id="btnSubmit" type="button" class="btn btn-success">Approve</button>
-                </div>
-
-
-            </div>
-        </div>
-    </div>
-
 </body>
-
-
-
-
-
-
-
 
 
 <style>
@@ -168,7 +91,7 @@
         height: 24px;
         margin-bottom: 0;
         position: relative;
-        width: 148px;
+        width: 107px;
         color: white;
         text-align: center;
     }
@@ -180,7 +103,7 @@
         height: 24px;
         margin-bottom: 0;
         position: relative;
-        width: 75px;
+        width: 107px;
         color: white;
         text-align: center;
     }
@@ -192,13 +115,14 @@
         height: 24px;
         margin-bottom: 0;
         position: relative;
-        width: 75px;
+        width: 107px;
         color: white;
         text-align: center;
     }
 </style>
 
 <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="~/fertilitypoint/appointment.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -235,6 +159,11 @@
 
         //});
     };
+
+
+
+
+
 </script>
 
 

@@ -22,9 +22,11 @@ namespace FertilityPoint.Areas.Admin.Controllers
             return View(patients);
         }
 
-        public IActionResult Profile()
+        public async Task<IActionResult> ProfileAsync(Guid Id)
         {
-            return View();
+            var patient = await patientRepository.GetById(Id);
+
+            return View(patient);
         }
     }
 }

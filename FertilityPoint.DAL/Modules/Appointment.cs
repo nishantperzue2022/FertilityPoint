@@ -13,5 +13,6 @@ namespace FertilityPoint.DAL.Modules
         public Guid PatientId { get; set; }
         public Guid TimeId { get; set; }
         public string TransactionNumber { get; set; }
+        public string ApprovedBy { get; set; }
     }
 }

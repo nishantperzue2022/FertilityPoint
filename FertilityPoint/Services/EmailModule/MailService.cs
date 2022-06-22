@@ -26,8 +26,6 @@ namespace FertilityPoint.Services.EmailModule
         private readonly ICountyRepository countyRepository;
 
         private readonly ITimeSlotRepository timeSlotRepository;
-
-
         public MailService(ITimeSlotRepository timeSlotRepository, IConfiguration config, IWebHostEnvironment env)
         {
             this.config = config;
@@ -37,7 +35,6 @@ namespace FertilityPoint.Services.EmailModule
             this.timeSlotRepository = timeSlotRepository;
 
         }
-
         public bool AccountEmailNotification(ApplicationUserDTO applicationUserDTO)
         {
             try
@@ -143,7 +140,6 @@ namespace FertilityPoint.Services.EmailModule
                 return false;
             }
         }
-
         public async Task<bool> AppointmentEmailNotification(AppointmentDTO appointmentDTO)
         {
             try
@@ -257,7 +253,6 @@ namespace FertilityPoint.Services.EmailModule
                 return false;
             }
         }
-
         public bool EnquiryNotification(EnquiryDTO enquiryDTO)
         {
             try
@@ -366,7 +361,6 @@ namespace FertilityPoint.Services.EmailModule
                 return false;
             }
         }
-
         public Task<bool> FertilityPointEmailNotification(AppointmentDTO appointmentDTO)
         {
             try
@@ -479,7 +473,6 @@ namespace FertilityPoint.Services.EmailModule
                 return Task.FromResult(false);
             }
         }
-
         public bool PasswordResetEmailNotification(ResetPasswordDTO resetPasswordDTO)
         {
             try
@@ -582,6 +575,84 @@ namespace FertilityPoint.Services.EmailModule
 
                 return false;
             }
+        }
+
+
+        public bool AppointmentApprovalNotification(AppointmentDTO appointmentDTO)
+        {
+            //Fetching Settings from WEB.CONFIG file. 
+
+
+            var emailSender = config.GetValue<string>("MailSettings:SMTPUserName");
+
+            var emailSenderPassword = config.GetValue<string>("MailSettings:Password");
+
+            var emailSenderHost = config.GetValue<string>("MailSettings:SMTPMailServer");
+
+            int emailSenderPort = Convert.ToInt32(config.GetValue<string>("MailSettings:SMTPPort"));
+
+            bool emailIsSSL = Convert.ToBoolean(config.GetValue<string>("MailSettings:SMTPUseSSL"));
+
+            //Fetching Email Body Text from EmailTemplate File. 
+
+            string FilePath = env.WebRootPath
+                          + Path.DirectorySeparatorChar.ToString()
+                          + "Templates"
+                          + Path.DirectorySeparatorChar.ToString()
+                          + "EmailTemplate"
+                          + Path.DirectorySeparatorChar.ToString()
+                          + "AppointmentApprovalNotification.html";
+
+
+            StreamReader str = new StreamReader(FilePath);
+
+            string MailText = str.ReadToEnd();
+
+            str.Close();
+
+            //Repalce [newusername] = signup user name   
+            MailText = MailText.Replace("[FirstName]", appointmentDTO.FirstName.Trim());
+
+            MailText = MailText.Replace("[AppointmentDate]", appointmentDTO.AppointmentDate.ToShortDateString());
+
+            MailText = MailText.Replace("[TimeSlot]", appointmentDTO.TimeSlot.Trim());
+
+            MailText = MailText.Replace("[CreateDate]", appointmentDTO.CreateDate.ToShortDateString());
+
+            string subject = "Fertility Point : Appointment Approval";
+
+            //Base class for sending email  
+            MailMessage _mailmsg = new MailMessage();
+
+            //Make TRUE because our body text is html  
+            _mailmsg.IsBodyHtml = true;
+
+            _mailmsg.From = new MailAddress(emailSender);
+
+            _mailmsg.To.Add(appointmentDTO.Email.ToString());
+
+            _mailmsg.Subject = subject;
+
+            _mailmsg.Body = MailText;
+
+            //Now set your SMTP   
+            SmtpClient _smtp = new SmtpClient();
+            {
+
+                _smtp.Host = emailSenderHost;
+
+                _smtp.Port = emailSenderPort;
+
+                _smtp.EnableSsl = emailIsSSL;
+
+                NetworkCredential _network = new NetworkCredential(emailSender, emailSenderPassword);
+
+                _smtp.Credentials = _network;
+
+                _smtp.Send(_mailmsg);
+            }
+
+            return true;
         }
     }
 }

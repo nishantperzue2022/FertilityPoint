@@ -25,13 +25,13 @@ function GetTimeSlotId() {
     console.log(timeslotid);
 
 
-  
+
     $.get("/Appointment/GetSlotById/?Id=" + timeslotid, function (data, status) {
 
         console.log(data);
 
         if (data.data == false) {
-          /*  alert("Does not exist");*/
+            /*  alert("Does not exist");*/
         } else {
 
             $("#txtId").val(data.data.id);
@@ -387,3 +387,82 @@ $(document).ready(function () {
     });
 
 });
+
+
+function ApproveAppointment(e) {
+
+    var id = e;
+
+    swal(
+        {
+            title: "Your are about to approve this appointment, are you sure?",
+
+            //text: "Deac!",
+
+            type: "success",
+
+            showCancelButton: true,
+
+            confirmButtonColor: "##62b76e",
+
+            confirmButtonText: "Yes, Approve!",
+
+            closeOnConfirm: false
+        },
+
+        function () {
+
+            $.ajax({
+
+                type: "GET",
+
+                url: "/Admin/Appointments/ApproveAppoinment/" + id,
+
+                success: function (response) {
+
+                    if (response.success) {
+
+                        swal({
+
+                            position: 'top-end',
+
+                            type: "success",
+
+                            title: response.responseText,
+
+                            showConfirmButton: false,
+
+                        });
+                        setTimeout(function () { location.reload(); }, 3000);
+
+                    }
+
+                    else {
+                        swal({
+                            position: 'top-end',
+                            type: "error",
+                            title: response.responseText,
+                            showConfirmButton: true,
+                            timer: 5000,
+                        });
+
+                    }
+
+                },
+                error: function (response) {
+
+                    console.log(response);
+                    swal({
+                        position: 'top-end',
+                        type: "error",
+                        title: "Server error ,kindly contact the admin for assistance",
+                        showConfirmButton: false,
+                        timer: 5000,
+                    });
+
+                }
+
+            })
+
+        });
+}

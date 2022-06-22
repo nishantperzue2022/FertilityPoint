@@ -8,7 +8,9 @@ namespace FertilityPoint.BLL.Repositories.AppointmentModule
     public interface IAppointmentRepository
     {
         Task<List<AppointmentDTO>> GetAll();
+        Task<AppointmentDTO> GetById(Guid Id);
         Task<AppointmentDTO> Create(AppointmentDTO appointmentDTO);
         AppointmentDTO GetTransaction(Guid Id);
+        Task<bool> ApproveAppointment(Guid Id, string approvedBy);
     }
 }

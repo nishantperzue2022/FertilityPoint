@@ -12,6 +12,7 @@ using FertilityPoint.DAL.Modules;
 using FertilityPoint.Extensions;
 using FertilityPoint.SeedAppUsers;
 using FertilityPoint.Services.EmailModule;
+using FertilityPoint.Services.SMSModule;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -73,6 +74,8 @@ namespace FertilityPoint
             services.AddScoped<ITimeSlotRepository, TimeSlotRepository>();
 
             services.AddScoped<IPatientRepository, PatientRepository>();
+
+            services.AddScoped<IMessagingService, MessagingService>();
 
         }
 

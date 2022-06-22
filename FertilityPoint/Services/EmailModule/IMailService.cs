@@ -11,8 +11,9 @@ namespace FertilityPoint.Services.EmailModule
     {
         Task<bool> AppointmentEmailNotification(AppointmentDTO appointmentDTO);
         Task<bool> FertilityPointEmailNotification(AppointmentDTO appointmentDTO);
-        bool EnquiryNotification(EnquiryDTO  enquiryDTO);
+        bool EnquiryNotification(EnquiryDTO enquiryDTO);
         bool PasswordResetEmailNotification(ResetPasswordDTO resetPasswordDTO);
         bool AccountEmailNotification(ApplicationUserDTO applicationUserDTO);
+        bool AppointmentApprovalNotification(AppointmentDTO appointmentDTO);
     }
 }

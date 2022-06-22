@@ -238,6 +238,11 @@ namespace FertilityPoint.Controllers
                     return Json(new { success = false, responseText = "Mpesa Transaction Number is a required field" });
                 }
 
+                if (appointmentDTO.AppointmentDate.GetHashCode() == 0)
+                {
+                    return Json(new { success = false, responseText = "Appointment date is a required field" });
+                }
+
                 var isPaymentExists = paymentRepository.IsTransactionExists(appointmentDTO.TransactionNumber);
 
                 if (isPaymentExists == false)
@@ -287,7 +292,7 @@ namespace FertilityPoint.Controllers
 
                         appointmentDTO.ReceiptURL = url;
 
-                        var sendClientEmail = await mailService.AppointmentEmailNotification(appointmentDTO);
+                        //var sendClientEmail = await mailService.AppointmentEmailNotification(appointmentDTO);
 
                         //var sendFertilityPointEmail = await mailService.FertilityPointEmailNotification(appointmentDTO);
 

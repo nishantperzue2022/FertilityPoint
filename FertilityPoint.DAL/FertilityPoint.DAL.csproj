@@ -18,4 +18,8 @@
     <ProjectReference Include="..\FertilityPoint.DTO\FertilityPoint.DTO.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Utils\" />
+  </ItemGroup>
+
 </Project>

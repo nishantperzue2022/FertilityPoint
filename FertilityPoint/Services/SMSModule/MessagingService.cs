@@ -16,7 +16,7 @@ namespace FertilityPoint.Services.SMSModule
         {
             this.config = config;
         }
-           
+
 
         public string formatPhoneNumber(string phoneNumber)
         {
@@ -45,11 +45,18 @@ namespace FertilityPoint.Services.SMSModule
         public async Task<AppointmentDTO> ApprovalNotificationSMS(AppointmentDTO appointmentDTO)
         {
             try
-            {        
-
+            {
                 var url = "http://167.172.14.50:4002/v1/send-sms";
 
-                var txtMessage = "Dear  " + appointmentDTO.FirstName + " Your appointment has approved ";
+                var txtMessage = "Dear  " +
+
+                    appointmentDTO.FirstName + ", your appointment dated : " +
+
+                    appointmentDTO.AppointmentDate.ToShortDateString() + " and time " +
+
+                    appointmentDTO.TimeSlot + " , has been approved. " +
+
+                    "For more enquiry you can reach us through : + 254 78 705 0074";
 
                 var key = config.GetValue<string>("SMS_Settings:BongaSMSKey");
 

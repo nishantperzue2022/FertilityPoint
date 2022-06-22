@@ -135,9 +135,55 @@ namespace FertilityPoint.BLL.Repositories.AppointmentModule
             }
 
         }
+        public async Task<AppointmentDTO> GetById(Guid Id)
+        {
+            try
+            {
+                var appointments = (from appointment in context.Appointments
 
+                                    join patient in context.Patients on appointment.PatientId equals patient.Id
 
+                                    join timslot in context.TimeSlots on appointment.TimeId equals timslot.Id
 
+                                    where appointment.Id == Id
+
+                                    select new AppointmentDTO()
+                                    {
+                                        Id = appointment.Id,
+
+                                        Status = appointment.Status,                                     
+
+                                        CreateDate = appointment.CreateDate,
+
+                                        AppointmentDate = appointment.AppointmentDate,
+
+                                        FirstName = patient.FirstName,
+
+                                        PhoneNumber = patient.PhoneNumber,
+
+                                        Email = patient.Email,
+
+                                        LastName = patient.LastName,
+
+                                        TimeId = appointment.TimeId,
+
+                                        TimeSlot = timslot.FromTime.ToString("h:mm tt") + " - " + timslot.FromTime.ToString("h:mm tt"),
+
+                                        ToTime = timslot.ToTime,
+
+                                    }).FirstOrDefaultAsync();
+
+                return await appointments;
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                return null;
+            }
+
+        }
         public AppointmentDTO GetTransaction(Guid Id)
         {
             try
@@ -196,5 +242,41 @@ namespace FertilityPoint.BLL.Repositories.AppointmentModule
                 return null;
             }
         }
+
+        public async Task<bool> ApproveAppointment(Guid Id,string approvedBy)
+        {
+            try
+            {
+                bool result = false;
+
+                var getAppointment = await context.Appointments.FindAsync(Id);
+
+                if (getAppointment != null)
+                {
+                    using (var transaction = context.Database.BeginTransaction())
+                    {
+                        getAppointment.Status = 1;
+
+                        getAppointment.ApprovedBy = approvedBy;
+
+                        transaction.Commit();
+
+                        await context.SaveChangesAsync();
+                    }
+
+                    return true;
+                }
+
+                return result;
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                return false;
+            }
+        }
+
     }
 }
