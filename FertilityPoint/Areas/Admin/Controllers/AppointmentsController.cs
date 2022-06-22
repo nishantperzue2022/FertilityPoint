@@ -69,7 +69,7 @@ namespace FertilityPoint.Areas.Admin.Controllers
                         CreateDate = get_appointment.CreateDate,
                     };
 
-                    //var sendSMS = messagingService.ApprovalNotificationSMS(appointment);
+                    var sendSMS = messagingService.ApprovalNotificationSMS(appointment);
 
                     var sendMail = mailService.AppointmentApprovalNotification(appointment);
 
