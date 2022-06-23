@@ -21,6 +21,7 @@ namespace FertilityPoint.DAL.Modules
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public byte IsPaymentUsed { get; set; }
+        public string ReceiptNo { get; set; }
 
     }
 }

@@ -20,6 +20,7 @@ namespace FertilityPoint.DTO.MpesaStkModule
         public string PhoneNumber { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string ReceiptNo { get; set; }
         public byte IsPaymentUsed { get; set; }
     }
 }

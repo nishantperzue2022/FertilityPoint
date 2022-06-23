@@ -23,10 +23,14 @@ namespace FertilityPoint.DTO.AppointmentModule
         public DateTime AppointmentDate { get; set; }
         public string TransactionNumber { get; set; }
         public string TimeSlot { get; set; }
+
+        //public string TimeSlot => FromTime.ToString("h:mm tt") + " - " + ToTime.ToString("h:mm tt");            
+
         public string TransactionDate { get; set; }
         public string ReceiptURL { get; set; }
         public decimal? Amount { get; set; }
         public string ApprovedBy { get; set; }
+        public string ReceiptNo { get; set; }
         public string NewAmount { get { return Amount.Value.ToString("N"); } }
     }
 }

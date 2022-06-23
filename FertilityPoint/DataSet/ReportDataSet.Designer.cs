@@ -311,6 +311,8 @@ namespace FertilityPoint.DataSet {
             
             private global::System.Data.DataColumn columnId;
             
+            private global::System.Data.DataColumn columnReceiptNo;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public InvoiceDataTable() {
@@ -474,6 +476,14 @@ namespace FertilityPoint.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn ReceiptNoColumn {
+                get {
+                    return this.columnReceiptNo;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -525,7 +535,8 @@ namespace FertilityPoint.DataSet {
                         string AppointmentTime, 
                         string PaidByNumber, 
                         string TransactionDate, 
-                        string Id) {
+                        string Id, 
+                        string ReceiptNo) {
                 InvoiceRow rowInvoiceRow = ((InvoiceRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         FullName,
@@ -543,7 +554,8 @@ namespace FertilityPoint.DataSet {
                         AppointmentTime,
                         PaidByNumber,
                         TransactionDate,
-                        Id};
+                        Id,
+                        ReceiptNo};
                 rowInvoiceRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowInvoiceRow);
                 return rowInvoiceRow;
@@ -582,6 +594,7 @@ namespace FertilityPoint.DataSet {
                 this.columnPaidByNumber = base.Columns["PaidByNumber"];
                 this.columnTransactionDate = base.Columns["TransactionDate"];
                 this.columnId = base.Columns["Id"];
+                this.columnReceiptNo = base.Columns["ReceiptNo"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -619,6 +632,8 @@ namespace FertilityPoint.DataSet {
                 base.Columns.Add(this.columnTransactionDate);
                 this.columnId = new global::System.Data.DataColumn("Id", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnId);
+                this.columnReceiptNo = new global::System.Data.DataColumn("ReceiptNo", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnReceiptNo);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1017,6 +1032,22 @@ namespace FertilityPoint.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string ReceiptNo {
+                get {
+                    try {
+                        return ((string)(this[this.tableInvoice.ReceiptNoColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ReceiptNo\' in table \'Invoice\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableInvoice.ReceiptNoColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public bool IsFullNameNull() {
                 return this.IsNull(this.tableInvoice.FullNameColumn);
             }
@@ -1205,6 +1236,18 @@ namespace FertilityPoint.DataSet {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public void SetIdNull() {
                 this[this.tableInvoice.IdColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsReceiptNoNull() {
+                return this.IsNull(this.tableInvoice.ReceiptNoColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetReceiptNoNull() {
+                this[this.tableInvoice.ReceiptNoColumn] = global::System.Convert.DBNull;
             }
         }
         

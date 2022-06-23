@@ -529,13 +529,13 @@ Nairobi, Kenya .</Value>
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>Order</Value>
+                <Value>Receipt No #</Value>
                 <Style>
                   <FontWeight>Bold</FontWeight>
                 </Style>
               </TextRun>
               <TextRun>
-                <Value>: #00124</Value>
+                <Value>: </Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -543,12 +543,6 @@ Nairobi, Kenya .</Value>
           </Paragraph>
           <Paragraph>
             <TextRuns>
-              <TextRun>
-                <Value>Issued:</Value>
-                <Style>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
               <TextRun>
                 <Value xml:space="preserve">
 </Value>
@@ -561,8 +555,8 @@ Nairobi, Kenya .</Value>
         <rd:DefaultName>Textbox12</rd:DefaultName>
         <Top>0.85937cm</Top>
         <Left>12.1412cm</Left>
-        <Height>1.2985cm</Height>
-        <Width>5.69144cm</Width>
+        <Height>0.51533cm</Height>
+        <Width>2.554cm</Width>
         <ZIndex>3</ZIndex>
         <Style>
           <Border>
@@ -658,40 +652,6 @@ Nairobi, Kenya .</Value>
         <Height>1.34083cm</Height>
         <Width>5.69144cm</Width>
         <ZIndex>5</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="ExecutionTime">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=Globals!ExecutionTime</Value>
-                <Style>
-                  <Format>dd MMMM yyyy</Format>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Left</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>ExecutionTime</rd:DefaultName>
-        <Top>1.27687cm</Top>
-        <Left>13.62053cm</Left>
-        <Height>0.5cm</Height>
-        <Width>3.66417cm</Width>
-        <ZIndex>6</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -983,13 +943,45 @@ Nairobi, Kenya .</Value>
         <Left>11.0675cm</Left>
         <Height>1.8cm</Height>
         <Width>7.01596cm</Width>
-        <ZIndex>7</ZIndex>
+        <ZIndex>6</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
         </Style>
       </Tablix>
+      <Textbox Name="ReceiptNo">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=First(Fields!ReceiptNo.Value, "PaymentInvoice")</Value>
+                <Style>
+                  <Color>Red</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>ReceiptNo</rd:DefaultName>
+        <Top>0.8382cm</Top>
+        <Left>14.93509cm</Left>
+        <Height>0.5365cm</Height>
+        <Width>3.14837cm</Width>
+        <ZIndex>7</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
     </ReportItems>
     <Height>4.31667in</Height>
     <Style />
@@ -1189,6 +1181,10 @@ Nairobi, Kenya .</Value>
         </Field>
         <Field Name="Id">
           <DataField>Id</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ReceiptNo">
+          <DataField>ReceiptNo</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>

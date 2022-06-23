@@ -94,11 +94,11 @@ namespace FertilityPoint.BLL.Repositories.TimeSlotModule
             }
         }
 
-        public async Task<TimeSlotDTO> GetById(Guid Id)
+        public TimeSlotDTO GetById(Guid Id)
         {
             try
             {
-                var data = await context.TimeSlots.FindAsync(Id);
+                var data = context.TimeSlots.Find(Id);
 
                 var slot = mapper.Map<TimeSlotDTO>(data);
 

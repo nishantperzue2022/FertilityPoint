@@ -109,11 +109,11 @@ namespace FertilityPoint.Areas.Admin.Controllers
             }
         }
 
-        public async Task<IActionResult> GetById(Guid Id)
+        public IActionResult GetById(Guid Id)
         {
             try
             {
-                var timeslot = await timeSlotRepository.GetById(Id);
+                var timeslot = timeSlotRepository.GetById(Id);
 
                 if (timeslot != null)
                 {

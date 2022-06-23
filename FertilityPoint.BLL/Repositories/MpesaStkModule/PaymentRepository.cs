@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FertilityPoint.DAL.Modules;
+using FertilityPoint.DAL.Utils;
 using FertilityPoint.DTO.MpesaStkModule;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -132,6 +133,12 @@ namespace FertilityPoint.BLL.Repositories.MpesaStkModule
         {
             try
             {
+                string code = ReceiptNumber.Generate_ReceiptNumber();
+
+                var receiptNumber = "RN" + code;
+
+                mpesaPaymentDTO.ReceiptNo = receiptNumber;
+
                 long timestamp = long.Parse(mpesaPaymentDTO.TransactionDate);
 
                 DateTime NewTransactionDate = GetDateTimeFromInt(timestamp).Value;
@@ -157,6 +164,8 @@ namespace FertilityPoint.BLL.Repositories.MpesaStkModule
                     TransactionDate = mpesaPaymentDTO.TransactionDate,
 
                     PhoneNumber = mpesaPaymentDTO.PhoneNumber,
+
+                    ReceiptNo = mpesaPaymentDTO.ReceiptNo,
                  
                 };
 

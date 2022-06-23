@@ -9,7 +9,7 @@ namespace FertilityPoint.Services.EmailModule
 {
     public interface IMailService
     {
-        Task<bool> AppointmentEmailNotification(AppointmentDTO appointmentDTO);
+        bool AppointmentEmailNotification(AppointmentDTO appointmentDTO);    
         Task<bool> FertilityPointEmailNotification(AppointmentDTO appointmentDTO);
         bool EnquiryNotification(EnquiryDTO enquiryDTO);
         bool PasswordResetEmailNotification(ResetPasswordDTO resetPasswordDTO);

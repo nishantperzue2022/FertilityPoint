@@ -41,6 +41,8 @@ namespace FertilityPoint.BLL.Repositories.AppointmentModule
 
                 UpdateSlot(appointmentDTO);
 
+                UpdatePaymentStatus(appointmentDTO);
+
                 return appointmentDTO;
             }
             catch (Exception ex)
@@ -71,26 +73,25 @@ namespace FertilityPoint.BLL.Repositories.AppointmentModule
 
             return false;
         }
+        public bool UpdatePaymentStatus(AppointmentDTO appointmentDTO)
+        {
+            var getSlot = context.MpesaPayments.Where(x => x.TransactionNumber == appointmentDTO.TransactionNumber.Trim()).FirstOrDefault();
 
-        //public async Task<List<AppointmentDTO>> GetAll()
-        //{
-        //    try
-        //    {
-        //        var data = await context.Appointments.ToListAsync();
+            if (getSlot != null)
+            {
+                using (var transaction = context.Database.BeginTransaction())
+                {
+                    getSlot.IsPaymentUsed = 1;
 
-        //        var appointmnets = mapper.Map<List<Appointment>, List<AppointmentDTO>>(data);
+                    transaction.Commit();
 
-        //        return appointmnets;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine(ex.Message);
+                    context.SaveChanges();
+                }
+                return true;
+            }
 
-        //        return null;
-        //    }
-
-        //}
-
+            return false;
+        }
         public async Task<List<AppointmentDTO>> GetAll()
         {
             try
@@ -117,9 +118,12 @@ namespace FertilityPoint.BLL.Repositories.AppointmentModule
 
                                         TimeId = appointment.TimeId,
 
-                                        TimeSlot = timslot.FromTime.ToString("h:mm tt") + " - " + timslot.FromTime.ToString("h:mm tt"),
+                                        FromTime = timslot.FromTime,
 
                                         ToTime = timslot.ToTime,
+
+                                        TimeSlot = timslot.FromTime.ToString("h:mm tt") + " - " + timslot.ToTime.ToString("h:mm tt"),
+
 
                                     }).ToListAsync();
 
@@ -151,7 +155,7 @@ namespace FertilityPoint.BLL.Repositories.AppointmentModule
                                     {
                                         Id = appointment.Id,
 
-                                        Status = appointment.Status,                                     
+                                        Status = appointment.Status,
 
                                         CreateDate = appointment.CreateDate,
 
@@ -166,8 +170,6 @@ namespace FertilityPoint.BLL.Repositories.AppointmentModule
                                         LastName = patient.LastName,
 
                                         TimeId = appointment.TimeId,
-
-                                        TimeSlot = timslot.FromTime.ToString("h:mm tt") + " - " + timslot.FromTime.ToString("h:mm tt"),
 
                                         ToTime = timslot.ToTime,
 
@@ -222,13 +224,18 @@ namespace FertilityPoint.BLL.Repositories.AppointmentModule
 
                                         Amount = payment.Amount,
 
+                                        ReceiptNo = payment.ReceiptNo,
+
                                         Email = patient.Email,
 
                                         TimeId = appointment.TimeId,
 
-                                        TimeSlot = timslot.FromTime.ToString("h:mm tt") + " - " + timslot.FromTime.ToString("h:mm tt"),
-
                                         ToTime = timslot.ToTime,
+
+                                        FromTime = timslot.FromTime,
+
+                                        TimeSlot = timslot.FromTime.ToString("h:mm tt") + " - " + timslot.ToTime.ToString("h:mm tt"),
+
 
                                     }).FirstOrDefault();
 
@@ -243,7 +250,7 @@ namespace FertilityPoint.BLL.Repositories.AppointmentModule
             }
         }
 
-        public async Task<bool> ApproveAppointment(Guid Id,string approvedBy)
+        public async Task<bool> ApproveAppointment(Guid Id, string approvedBy)
         {
             try
             {
@@ -278,5 +285,6 @@ namespace FertilityPoint.BLL.Repositories.AppointmentModule
             }
         }
 
+     
     }
 }

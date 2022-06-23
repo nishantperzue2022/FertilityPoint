@@ -77,7 +77,9 @@ namespace FertilityPoint.Areas.Admin.Controllers
             {
                 Console.WriteLine(ex.Message);
 
-                return Json(new { success = false, responseText = "Something went wrong" });
+                TempData["Error"] = "Something went wrong";
+
+                return RedirectToAction("Login", "Account", new { area = "" });
             }
         }
     }

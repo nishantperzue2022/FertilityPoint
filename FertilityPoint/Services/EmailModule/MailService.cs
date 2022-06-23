@@ -21,18 +21,14 @@ namespace FertilityPoint.Services.EmailModule
     {
         private readonly IConfiguration config;
 
-        private readonly IWebHostEnvironment env;
+        private readonly IWebHostEnvironment env;     
 
-        private readonly ICountyRepository countyRepository;
-
-        private readonly ITimeSlotRepository timeSlotRepository;
-        public MailService(ITimeSlotRepository timeSlotRepository, IConfiguration config, IWebHostEnvironment env)
+  
+        public MailService(IConfiguration config, IWebHostEnvironment env)
         {
             this.config = config;
 
             this.env = env;
-
-            this.timeSlotRepository = timeSlotRepository;
 
         }
         public bool AccountEmailNotification(ApplicationUserDTO applicationUserDTO)
@@ -140,14 +136,10 @@ namespace FertilityPoint.Services.EmailModule
                 return false;
             }
         }
-        public async Task<bool> AppointmentEmailNotification(AppointmentDTO appointmentDTO)
+        public bool AppointmentEmailNotification(AppointmentDTO appointmentDTO)
         {
             try
             {
-                var timeslot = await timeSlotRepository.GetById(appointmentDTO.TimeId);
-
-                appointmentDTO.TimeSlot = timeslot.TimeSlot;
-
                 var SMTPEmailToNetwork = config.GetValue<string>("MailSettings:SMTPEmailToNetwork");
 
                 var SMTPMailServer = config.GetValue<string>("MailSettings:SMTPMailServer");
@@ -175,7 +167,6 @@ namespace FertilityPoint.Services.EmailModule
                 foreach (var to in mailAddressesTo)
                     mailMessage.To.Add(to);
 
-
                 mailMessage.Subject = "Fertility Point: ";
 
                 var templatePath = env.WebRootPath
@@ -190,9 +181,7 @@ namespace FertilityPoint.Services.EmailModule
 
                 using (StreamReader SourceReader = File.OpenText(templatePath))
                 {
-
                     builder.HtmlBody = SourceReader.ReadToEnd();
-
                 }
 
                 mailMessage.BodyEncoding = System.Text.Encoding.UTF8;
@@ -201,12 +190,11 @@ namespace FertilityPoint.Services.EmailModule
 
                      appointmentDTO.FullName,
 
-                     appointmentDTO.AppointmentDate,
+                     appointmentDTO.AppointmentDate.ToShortDateString(),
 
                      appointmentDTO.TimeSlot,
 
                      appointmentDTO.ReceiptURL
-
 
                     );
 
@@ -576,8 +564,6 @@ namespace FertilityPoint.Services.EmailModule
                 return false;
             }
         }
-
-
         public bool AppointmentApprovalNotification(AppointmentDTO appointmentDTO)
         {
             //Fetching Settings from WEB.CONFIG file. 

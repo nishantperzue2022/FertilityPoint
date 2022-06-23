@@ -19,11 +19,11 @@ namespace FertilityPoint.Areas.Admin.Controllers
 
         private readonly IMessagingService messagingService;
 
-        private readonly IMailService  mailService;
+        private readonly IMailService mailService;
 
-        private readonly UserManager<AppUser>  userManager;
+        private readonly UserManager<AppUser> userManager;
 
-        public AppointmentsController(IMailService mailService,UserManager<AppUser> userManager,IMessagingService messagingService, IAppointmentRepository appointmentRepository)
+        public AppointmentsController(IMailService mailService, UserManager<AppUser> userManager, IMessagingService messagingService, IAppointmentRepository appointmentRepository)
         {
             this.appointmentRepository = appointmentRepository;
 
@@ -35,12 +35,23 @@ namespace FertilityPoint.Areas.Admin.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var appointments = (await appointmentRepository.GetAll()).OrderBy(x => x.FullName);
+            try
+            {
+                var appointments = (await appointmentRepository.GetAll()).OrderBy(x => x.FullName);
 
-            return View(appointments);
+                return View(appointments);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                TempData["Error"] = "Something went wrong";
+
+                return RedirectToAction("Login", "Account", new { area = "" });
+            }
         }
 
-        public async Task<IActionResult> ApproveAppoinment(Guid Id,string approvedBy)
+        public async Task<IActionResult> ApproveAppoinment(Guid Id, string approvedBy)
         {
             try
             {
@@ -56,13 +67,11 @@ namespace FertilityPoint.Areas.Admin.Controllers
 
                     var appointment = new AppointmentDTO()
                     {
-                        FirstName = get_appointment.FirstName,                       
+                        FirstName = get_appointment.FirstName,
 
                         PhoneNumber = get_appointment.PhoneNumber,
 
                         AppointmentDate = get_appointment.AppointmentDate,
-
-                        TimeSlot = get_appointment.TimeSlot,
 
                         Email = get_appointment.Email,
 
