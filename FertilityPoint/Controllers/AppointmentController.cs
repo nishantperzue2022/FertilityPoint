@@ -82,7 +82,7 @@ namespace FertilityPoint.Controllers
         {
             try
             {
-                var timeslot = (await timeSlotRepository.GetAll()).Where(x => x.IsBooked == 0).OrderBy(x => x.TimeSlot);
+                var timeslot = (await timeSlotRepository.GetAll()).Where(x => x.IsBooked == 0).OrderBy(x => x.TimeSlot).ToList();
 
                 return View(timeslot);
             }

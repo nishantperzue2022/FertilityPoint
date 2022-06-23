@@ -91,16 +91,18 @@
 .navbar .navbar-nav .nav-link {
     margin-right: 30px;
     padding: 25px 0;
-    color: var(--dark);
+    /*  color: var(--dark);*/
+    color: #fff;
     font-size: 15px;
     font-weight: 500;
-/*    text-transform: uppercase;*/
+    /*    text-transform: uppercase;*/
     outline: none;
 }
 
 .navbar .navbar-nav .nav-link:hover,
 .navbar .navbar-nav .nav-link.active {
-    color: var(--primary);
+/*    color: var(--primary);*/
+    color: #fff;
 }
 
 .navbar .dropdown-toggle::after {

@@ -22,7 +22,7 @@ namespace FertilityPoint.Extensions
             var identity = await base.GenerateClaimsAsync(user);
 
             identity.AddClaim(new Claim("UserFirstName", user.FirstName ?? ""));
-
+                    
             return identity;
         }
 

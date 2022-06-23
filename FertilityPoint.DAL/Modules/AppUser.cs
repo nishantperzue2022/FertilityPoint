@@ -11,7 +11,7 @@ namespace FertilityPoint.DAL.Modules
         public string LastName { get; set; }
         public string CreatedBy { get; set; }
         public Guid? SpecialityId { get; set; }
-        public bool isActive { get; set; }
+        public bool isActive { get; set; }       
         public DateTime CreateDate { get; set; }
 
     }

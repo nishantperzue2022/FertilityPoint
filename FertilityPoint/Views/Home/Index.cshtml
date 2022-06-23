@@ -1,5 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+
 }
 
 <!-- Carousel Start -->
@@ -55,49 +56,49 @@
 
 
 <div class="">
-<div class="cont">
-    <div class="aa">
-        <ul>
-            <li>
-                 <strong>Success Rates:</strong>
+    <div class="cont">
+        <div class="aa">
+            <ul>
+                <li>
+                    <strong>Success Rates:</strong>
 
-                <strong>IVF/ICSI</strong> - 55%-65%, <strong>IUI</strong> - 25% <span class="d-inline-block w-100">
-                    The success rates of IVF have been
-                    35-40% in the best of the labs and we have success rates of 55%-65%, which includes all age groups.
+                    <strong>IVF/ICSI</strong> - 55%-65%, <strong>IUI</strong> - 25% <span class="d-inline-block w-100">
+                        The success rates of IVF have been
+                        35-40% in the best of the labs and we have success rates of 55%-65%, which includes all age groups.
 
-                </span>
-            </li>
+                    </span>
+                </li>
 
-            <li>
+                <li>
 
-                <span class="d-inline-block w-100">
-                    The success rates of IUI have been a maximum of 15-20%
-                    and our IUI success rates are 25%.
-                </span>
+                    <span class="d-inline-block w-100">
+                        The success rates of IUI have been a maximum of 15-20%
+                        and our IUI success rates are 25%.
+                    </span>
 
-            </li>
-            <li>
-                <strong>Genetic Screening and Testing:</strong> We assist in providing Preimplantation Genetic Screening (PGS)
-                and Preimplantation Genetic Diagnosis
-                (PGD) tests to detect chromosomal abnormalities and genetic diseases in embryos.
+                </li>
+                <li>
+                    <strong>Genetic Screening and Testing:</strong> We assist in providing Preimplantation Genetic Screening (PGS)
+                    and Preimplantation Genetic Diagnosis
+                    (PGD) tests to detect chromosomal abnormalities and genetic diseases in embryos.
 
-            </li>
-            <li>
-                PGD/PGS can detect chromosomal abnormalities especially in older age group patients and
-                recurrent implantation failure cases, where aneuploidies are common cause of failures.
-                
-            </li>
+                </li>
+                <li>
+                    PGD/PGS can detect chromosomal abnormalities especially in older age group patients and
+                    recurrent implantation failure cases, where aneuploidies are common cause of failures.
 
-            <li>
-                Diseases like Sickle cell anemia and Thalassemia can be detected in embryos before transferring.
-                Hence, only the normal and healthy embryos devoid of the disease are transferred.
-                The only IVF centre offering this facility in Kenya.
-            </li>
+                </li>
 
-        </ul>
+                <li>
+                    Diseases like Sickle cell anemia and Thalassemia can be detected in embryos before transferring.
+                    Hence, only the normal and healthy embryos devoid of the disease are transferred.
+                    The only IVF centre offering this facility in Kenya.
+                </li>
+
+            </ul>
+        </div>
+
     </div>
-
-</div>
 </div>
 
 
@@ -423,11 +424,11 @@
     }
 
     /*
-                                        .container {
+                                                .container {
 
-                                            position: relative;
-                                        }
-            */
+                                                    position: relative;
+                                                }
+                    */
     .aa {
         height: 150px;
         overflow: hidden;
@@ -511,6 +512,8 @@
 
 <script>
     $(document).ready(function() {
+      
+        document.getElementById('divHome').style.display = 'none';
 
         function scrollTxt(el, heightTxt) {
             let v = $(el).css('top');
@@ -541,4 +544,24 @@
             scrollTxt('ul', -size + 'px')
         }, 2000);
     })
+
+    var showElem = document.getElementById("show");
+
+    var hideElem = document.getElementById("hide");
+
+    showElem.onclick = function() {
+        hideElem.style.display = 'none';
+    }
+
+    hideElem.onclick = function() {
+        showElem.style.display = 'none';
+    }
+
+
+
+
+
+
+
+
 </script>

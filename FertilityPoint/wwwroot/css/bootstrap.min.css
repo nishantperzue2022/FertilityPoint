@@ -195,7 +195,7 @@ sup {
 }
 
 a {
-    color: #32C36C;
+    color: #9b9b9b;
     text-decoration: none
 }
 
@@ -3379,12 +3379,12 @@ textarea.form-control-lg {
 
 .btn-link {
     font-weight: 400;
-    color: #32C36C;
+    color: #9b9b9b;
     text-decoration: none
 }
 
     .btn-link:hover {
-        color: #289c56
+        color: #9b9b9b
     }
 
     .btn-link:disabled, .btn-link.disabled {
@@ -4255,7 +4255,7 @@ textarea.form-control-lg {
     color: rgba(0,0,0,0.9)
 }
 
-    .navbar-light .navbar-brand:hover, .navbar-light .navbar-brand:focus {
+/*    .navbar-light .navbar-brand:hover, .navbar-light .navbar-brand:focus {
         color: rgba(0,0,0,0.9)
     }
 
@@ -4273,7 +4273,7 @@ textarea.form-control-lg {
 
     .navbar-light .navbar-nav .show > .nav-link, .navbar-light .navbar-nav .nav-link.active {
         color: rgba(0,0,0,0.9)
-    }
+    }*/
 
 .navbar-light .navbar-toggler {
     color: rgba(0,0,0,0.55);
@@ -7817,7 +7817,7 @@ textarea.form-control-lg {
 }
 
 .bg-white {
-    background-color: #fff !important
+    background-color: #263b6b !important
 }
 
 .bg-transparent {
