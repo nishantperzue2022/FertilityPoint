@@ -21,11 +21,26 @@ namespace FertilityPoint.Controllers
 
             return View(timeslot);
         }  
-        public async Task<IActionResult> GetSlots()
+        public async Task<IActionResult> GetSlots1()
         {
             var timeslot = (await timeSlotRepository.GetAll()).Where(x => x.IsBooked == 0).OrderBy(x => x.TimeSlot).ToList();
 
             return Json(new { data = timeslot });
+        }
+
+
+        public async Task<IActionResult> GetSlots()
+        {
+            var timeslot = (await timeSlotRepository.GetAll()).Where(x => x.IsBooked == 0).OrderBy(x => x.TimeSlot).ToList();
+
+            return Json(timeslot.Select(x => new
+            {
+                MakeId = x.Id,
+
+                MakeName = x.TimeSlot
+
+            }).ToList());
+
         }
     }
 }
