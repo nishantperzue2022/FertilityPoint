@@ -214,9 +214,7 @@ function SubmitAppointment() {
 
         url: "/Appointment/Create/",
 
-        data: data,
-
-        beforeSend: function () { ShowLoader(); },
+        data: data,   
 
         success: function (response) {
 

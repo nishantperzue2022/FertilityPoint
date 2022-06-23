@@ -15,11 +15,17 @@ namespace FertilityPoint.Controllers
         {
             this.timeSlotRepository = timeSlotRepository;
         }
-        public async Task<IActionResult> IndexAsync()
+        public async Task<IActionResult> Index()
         {
             var timeslot = (await timeSlotRepository.GetAll()).Where(x => x.IsBooked == 0).OrderBy(x => x.TimeSlot).ToList();
 
             return View(timeslot);
+        }  
+        public async Task<IActionResult> GetSlots()
+        {
+            var timeslot = (await timeSlotRepository.GetAll()).Where(x => x.IsBooked == 0).OrderBy(x => x.TimeSlot).ToList();
+
+            return Json(new { data = timeslot });
         }
     }
 }
