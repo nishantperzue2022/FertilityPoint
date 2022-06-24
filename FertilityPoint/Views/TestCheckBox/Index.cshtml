@@ -28,14 +28,9 @@
     </div>
 </div>
 
-
-
-
 <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
 
-
 <script>
-
 
     $(document).ready(function() {
 
@@ -43,7 +38,6 @@
     });
 
     function GetAllData() {
-
 
         $.ajax({
             type: "GET",
@@ -56,11 +50,8 @@
                 var arr = data;
 
                 $.each(arr, function(index, value) {
-
                     console.log('The value at arr[' + index + '] is: ' + value);
-
                     console.log(value);
-
 
                     $('#container').append(
                         $(document.createElement('input')).prop({
@@ -78,27 +69,17 @@
                             }).html()
                         )
 
-
                         .append(
                             $(document.createElement('span')).prop({
 
                                 class: 'cat label'
                             }).html(value.makeName)
 
-
-
-
                         )
-
-
                         .append(document.createElement('br'));
 
-
                 });
-
-
             }
-
 
         });
     }
