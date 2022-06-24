@@ -20,7 +20,8 @@ namespace FertilityPoint.DAL.Modules
         public virtual DbSet<CheckoutRequest> CheckoutRequests { get; set; }
         public virtual DbSet<MpesaPayment> MpesaPayments { get; set; }
         public virtual DbSet<TimeSlot> TimeSlots { get; set; }
-        public virtual DbSet<Patient>  Patients { get; set; }
+        public virtual DbSet<Patient> Patients { get; set; }
+        public virtual DbSet<AppointmentPackage> AppointmentPackages { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -29,6 +30,12 @@ namespace FertilityPoint.DAL.Modules
             {
                 entity.Property(e => e.Amount).HasColumnType("decimal(18,4)");
                 entity.Property(e => e.Balance).HasColumnType("decimal(18,4)");
+
+            });
+
+            modelBuilder.Entity<AppointmentPackage>(entity =>
+            {
+                entity.Property(e => e.Amount).HasColumnType("decimal(18,2)");   
 
             });
         }

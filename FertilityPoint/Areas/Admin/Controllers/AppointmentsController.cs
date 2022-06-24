@@ -37,7 +37,7 @@ namespace FertilityPoint.Areas.Admin.Controllers
         {
             try
             {
-                var appointments = (await appointmentRepository.GetAll()).OrderBy(x => x.FullName);
+                var appointments = (await appointmentRepository.GetAll()).Where(x => x.Status == 0).OrderBy(x => x.CreateDate);
 
                 return View(appointments);
             }

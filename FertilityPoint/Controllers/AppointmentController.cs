@@ -78,13 +78,29 @@ namespace FertilityPoint.Controllers
             this.config = config;
 
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string AppointmentDate)
         {
             try
             {
-                var timeslot = (await timeSlotRepository.GetAll()).Where(x => x.IsBooked == 0).OrderBy(x => x.TimeSlot).ToList();
+                if (AppointmentDate == null)
+                {
+                    var timeslot = (await timeSlotRepository.GetAll()).Where(x => x.IsBooked == 0).OrderBy(x => x.FromTime).ToList();
 
-                return View(timeslot);
+                    return View(timeslot);
+                }
+                else
+                {
+                    if (AppointmentDate == null)
+                    {
+                        DateTime oDate = Convert.ToDateTime(AppointmentDate);
+
+                        var timeslot = (await timeSlotRepository.GetAll()).Where(x => x.IsBooked == 0 && x.AppointmentDate == oDate);
+
+                        return View(timeslot);
+                    }
+                }
+                return View();
+
             }
             catch (Exception ex)
             {
@@ -227,6 +243,12 @@ namespace FertilityPoint.Controllers
         {
             try
             {
+                var appointmentDate = appointmentDTO.AppointmentDate;
+
+                DateTime oDate = Convert.ToDateTime(appointmentDate);
+
+                appointmentDTO.AppointmentDate = oDate;
+
                 if (appointmentDTO.Email == null || appointmentDTO.Email == string.Empty)
                 {
                     return Json(new { success = false, responseText = "Email is a required field" });
@@ -339,7 +361,6 @@ namespace FertilityPoint.Controllers
                 //int amnt = Convert.ToInt32(serviceDetails.Amount);
 
                 var msisdn = formatPhoneNumber(PhoneNumber);
-
 
                 string url = @"https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest";
 

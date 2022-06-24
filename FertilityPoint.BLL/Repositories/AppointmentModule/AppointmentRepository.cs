@@ -24,15 +24,11 @@ namespace FertilityPoint.BLL.Repositories.AppointmentModule
         public async Task<AppointmentDTO> Create(AppointmentDTO appointmentDTO)
         {
             try
-            {
-                var appointmentDate = appointmentDTO.AppointmentDate.ToShortTimeString();
-
+            {              
                 appointmentDTO.CreateDate = DateTime.Now;
 
                 appointmentDTO.Id = Guid.NewGuid();
-
-                appointmentDTO.AppointmentDate = Convert.ToDateTime(appointmentDate);
-
+                   
                 var appointment = mapper.Map<Appointment>(appointmentDTO);
 
                 context.Appointments.Add(appointment);
