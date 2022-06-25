@@ -256,7 +256,7 @@ namespace FertilityPoint.Controllers
 
                 if (appointmentDTO.TimeId == Guid.Empty)
                 {
-                    return Json(new { success = false, responseText = "Email is a required field" });
+                    return Json(new { success = false, responseText = "Appointment time is a required field" });
                 }
 
                 if (appointmentDTO.TransactionNumber == null || appointmentDTO.Email == string.Empty)

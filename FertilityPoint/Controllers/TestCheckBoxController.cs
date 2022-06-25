@@ -35,9 +35,9 @@ namespace FertilityPoint.Controllers
 
             return Json(timeslot.Select(x => new
             {
-                MakeId = x.Id,
+                SlotId = x.Id,
 
-                MakeName = x.TimeSlot
+                SlotName = x.TimeSlot
 
             }).ToList());
 

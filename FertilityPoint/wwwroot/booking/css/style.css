@@ -8236,7 +8236,8 @@ body .multi-optn {
     font-weight: 600;
     font-size: 18px;
     line-height: 22px;
-    color: #000
+    color: #000;
+    font-family: "Roboto",sans-serif;
 }
 
 .time-slot ul {
