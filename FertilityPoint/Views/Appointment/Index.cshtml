@@ -3,426 +3,246 @@
     ViewData["Title"] = "Index";
 }
 
-
 <link href="~/booking/css/style.css" rel="stylesheet" />
 <link href="~/css/appointment.css" rel="stylesheet" />
 
+<html>
 
 
-<div class="container mt-5">
-    <div class="row d-flex justify-content-center align-items-center">
-        <div class="col-md-10">
-            <form id="frmSubAppointment">
-                <h1 id="register">Booking</h1>
-                <div class="all-steps" id="all-steps">
-                    <span class="step"></span>
-                    <span class="step"></span>
-                    <span class="step"></span>
-        
-                </div>
 
+<body>
+    <div style="margin-top:-3rem;">
+        <form id="frmSubAppointment" method="post" action="">
+            <h1>Book Appointment</h1>
+            <!-- One "tab" for each step in the form: -->
+            <div class="tab">
+                <div class="main-wrapper">
+                    <div class="row mb-5">
+                        <div class="col-12">
+                            <div class="card booking-schedule schedule-widget">
 
-                <div class="tab">
+                                <div class="schedule-header">
+                                    <div class="date-booking">
+                                        <div class="row align-items-center">
+                                            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                                                <h4 class="mb-0">@DateTime.Now.ToString("dd MMM yyyy") </h4>
+                                            </div>
+                                            <div class="col-12 col-sm-6 col-md-2 col-lg-4 text-sm-center">
+                                                <p class="text-muted mb-0">@DateTime.Now.ToString("dddd")</p>
+                                            </div>
+                                            <div class="col-sm-4 text-md-end">
+                                                <div class="bookingrange">
 
-                    <div class="main-wrapper">
-                        <div class="row mb-5">
-                            <div class="col-12">
-                                <div class="card booking-schedule schedule-widget">
+                                                    <input type="text" name="AppointmentDate" onchange="GetAppDate(this)" id="txtAppointmentDate" class="form-control" autocomplete="off" />
 
-                                    <div class="schedule-header">
-                                        <div class="date-booking">
-                                            <div class="row align-items-center">
-                                                <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-                                                    <h4 class="mb-0">@DateTime.Now.ToString("dd MMM yyyy") </h4>
-                                                </div>
-                                                <div class="col-12 col-sm-6 col-md-2 col-lg-4 text-sm-center">
-                                                    <p class="text-muted mb-0">@DateTime.Now.ToString("dddd")</p>
-                                                </div>
-                                                <div class="col-sm-4 text-md-end">
-                                                    <div class="bookingrange">
-
-                                                        <input type="date" name="AppointmentDate" onchange="GetAppDate(this)" id="txtAppointmentDate" class="form-control" />
-
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
 
-                                    <div class="schedule-cont">
-                                        <div class="row">
-                                            <div class="col-md-12">
+                                <div class="schedule-cont">
+                                    <div class="row">
+                                        <div class="col-md-12">
 
-                                                @if (Model != null && Model.Count() > 0)
+                                            @if (Model != null && Model.Count() > 0)
+                                            {
+                                                @foreach (var item in Model)
                                                 {
-                                                    @foreach (var item in Model)
-                                                    {
-                                                        var slotStatus = item.IsBooked;
+                                                    var slotStatus = item.IsBooked;
 
 
-                                                        <div class="cat action">
-                                                            <label>
-                                                                <input class="txtTime" onchange="GetTimeSlotId(this)" type="checkbox" id="txtTimeId" name="TimeId" value="@item.Id">
-                                                                <span id="spanid">@item.TimeSlot</span>
+                                                    <div class="cat action">
+                                                        <label>
+                                                            <input class="txtTime" onchange="GetTimeSlotId(this)" type="checkbox" id="txtTimeId" name="TimeId" value="@item.Id">
+                                                            <span id="spanid">@item.TimeSlot</span>
 
-                                                            </label>
-                                                        </div>
-
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    <div class="alert alert-danger" role="alert" id="error">
-                                                        There are no slots at the moment please check gain later
+                                                        </label>
                                                     </div>
 
                                                 }
-                                            </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="alert alert-danger" role="alert" id="error">
+                                                    There are no slots at the moment please check gain later
+                                                </div>
+
+                                            }
                                         </div>
                                     </div>
-
-
-
                                 </div>
 
 
 
                             </div>
+
+
+
                         </div>
                     </div>
                 </div>
 
+            </div>
 
-                <div class="tab">
+            <div class="tab">
+                <div class="main-wrapper">
 
-                    <div class="main-wrapper">
+                    <div class="content" style="transform: none; min-height: 253.5px;">
+                        <div class="container" style="transform: none;">
 
-                        <div class="content" style="transform: none; min-height: 253.5px;">
-                            <div class="container" style="transform: none;">
+                            <div class="row" style="transform: none;">
 
-                                <div class="row" style="transform: none;">
-                                    <div class="col-md-5 col-lg-4 theiaStickySidebar" style="position: relative; overflow: visible; box-sizing: border-box; min-height: 1px;">
+                                <div class="col-md-12 col-lg-12">
+                                    <div class="card book-info">
+                                        <div class="info-widget">
+                                            <div class="card-header">
+                                                <h4 class="card-title">Personal Information</h4>
+                                            </div>
+                                            <div class="card-body">
 
-                                        <div class="theiaStickySidebar" style="padding-top: 0px; padding-bottom: 1px; position: static; transform: none; left: 12px; top: 0px;">
-                                            <div class="card booking-card">
-                                                <div class="card-header">
-                                                    <h4 class="card-title">Booking Summary</h4>
-                                                </div>
-                                                <div class="card-body">
-
-                                                    <div class="booking-doc-info">
-                                                    </div>
-                                                    <br />
-                                                    <div class="booking-summary border-0">
-                                                        <div class="booking-item-wrap">
-                                                            <ul class="booking-date">
-                                                                <li>Date <span id="txtAppDate"></span></li>
-                                                                <li>Time <span id="txtTimeSlotName"></span></li>
-                                                            </ul>
-                                                            <ul class="booking-fee">
-                                                                <li>Appointment Fee <span>Ksh 2,500</span></li>
-
-                                                            </ul>
+                                                <div class="row">
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label>First Name</label>
+                                                            <input class="form-control" type="text" name="FirstName" id="txtFirstName">
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="card-footer">
-                                                    <div class="booking-total">
-                                                        <ul class="booking-total-list">
-                                                            <li>
-                                                                <span>Total</span>
-                                                                <span class="total-cost">Ksh 2,500</span>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div><div class="resize-sensor" style="position: absolute; inset: 0px; overflow: hidden; z-index: -1; visibility: hidden;"><div class="resize-sensor-expand" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;"><div style="position: absolute; left: 0px; top: 0px; transition: all 0s ease 0s; width: 380px; height: 841px;"></div></div><div class="resize-sensor-shrink" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;"><div style="position: absolute; left: 0; top: 0; transition: 0s; width: 200%; height: 200%"></div></div></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-7 col-lg-8">
-                                        <div class="card book-info">
-                                            <div class="info-widget">
-                                                <div class="card-header">
-                                                    <h4 class="card-title">Personal Information</h4>
-                                                </div>
-                                                <div class="card-body">
-
-                                                    <div class="row">
-                                                        <div class="col-md-6 col-sm-12">
-                                                            <div class="form-group">
-                                                                <label>First Name</label>
-                                                                <input class="form-control" type="text" name="FirstName" id="txtFirstName">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6 col-sm-12">
-                                                            <div class="form-group">
-                                                                <label>Last Name</label>
-                                                                <input class="form-control" type="text" name="LastName" id="txtLastName">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6 col-sm-12">
-                                                            <div class="form-group">
-                                                                <label>Email</label>
-                                                                <input class="form-control" type="email" name="Email" id="txtEmail">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6 col-sm-12">
-                                                            <div class="form-group">
-                                                                <label>Phone</label>
-                                                                <input class="form-control" type="text" name="PhoneNumber" id="txtPhoneNumber" placeholder="(254)7XX XXX XXX">
-                                                            </div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label>Last Name</label>
+                                                            <input class="form-control" type="text" name="LastName" id="txtLastName">
                                                         </div>
                                                     </div>
-
-                                                </div>
-
-                                                <div class="card-body inf-widget">
-                                                    <div class="payment-widget">
-                                                        <h4 class="card-title">Payment Method</h4>
-
-                                                        <div class="payment-list">
-                                                            <label class="payment-radio credit-card-option">
-                                                                <input type="radio" name="radio" onclick="stkSelected()">
-                                                                <span class="checkmark"></span>
-                                                                Mpesa Express (STK)
-
-                                                            </label>
-
-                                                            <div class="row" style="display:none;" id="divSTK">
-
-                                                                <div class="">
-                                                                    <div class="form-group">
-                                                                        <label>
-                                                                            Click on "Send Request" button to generate payment request on your phone. Enter your MPESA PIN on your phone to complete the payment.
-                                                                        </label>
-
-                                                                    </div>
-                                                                </div>
-
-
-                                                                <div class="row">
-
-                                                                    <div class="col-md-6">
-
-                                                                        <div class="divsuccess" style="display:none" id="successMsg">
-                                                                            <div class="alert alert-success" role="alert" id="error">
-                                                                                <p id="showsuccess"></p>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="divError" style="display:none" id="errorMsg">
-                                                                            <div class="alert alert-danger" role="alert" id="error">
-                                                                                <p id="showError"></p>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <span class="input-group-btn">
-                                                                            <button type="button" onclick="SendStkPush()" class="btn btn-primary">Send Request!</button>
-                                                                        </span>
-
-                                                                    </div>
-                                                                </div>
-
-
-                                                            </div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label>Email</label>
+                                                            <input class="form-control" type="email" name="Email" id="txtEmail">
                                                         </div>
                                                     </div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label>Phone</label>
+                                                            <input class="form-control" type="text" name="PhoneNumber" id="txtPhoneNumber" placeholder="(254)7XX XXX XXX">
+                                                        </div>
+                                                    </div>
+                                                </div>
 
-                                                    <br />
+                                            </div>
+
+                                            <div class="card-body inf-widget">
+                                                <div class="payment-widget">
+                                                    <h4 class="card-title">Payment Method</h4>
 
                                                     <div class="payment-list">
-                                                        <label class="payment-radio paypal-option">
-                                                            <input type="radio" name="radio" onclick="payBillSelected()">
+                                                        <label class="payment-radio credit-card-option">
+                                                            <input type="radio" name="radio" onclick="stkSelected()">
                                                             <span class="checkmark"></span>
-                                                            Mpesa Paybill
+                                                            Mpesa Express (STK)
+
                                                         </label>
 
-                                                        <div class="row" style="display:none;" id="divPaybill">
+                                                        <div class="row" style="display:none;" id="divSTK">
+                                                                                                              
 
-                                                            <div id="mpesa_paybill" class="col-md-12 p-2 border-left pl-3 d-block">
-                                                                <p style="color:#513c3c;">You can also pay using Lipa na MPESA by using the following instructions:</p>
-                                                                <ol>
-                                                                    <li>Go to the M-PESA menu</li>
-                                                                    <li>Select Lipa na M-PESA</li>
-                                                                    <li> Select the Paybill option</li>
-                                                                    <li class="">Enter business number <strong >206206</strong> </li>
-                                                                    <li class="">Enter your account number <strong>Your National ID</strong></li>
-                                                                    <li class="">Enter the amount Ksh <strong>Ksh 2,500</strong> </li>
-                                                                    <li>Enter PIN and press OK to send </li>
 
-                                                                </ol>
+                                                            <div class="row">
+
+                                                                 <div class="col-md-4">
+                                                                    <img class="mpesa-logo" src="~/img/mpesa-logo.png" alt="Logo">
+                                                                </div>
+                                                                <div class="col-md-6">
+
+                                                                    
+                                                         
+                                                                <div class="form-group">
+                                                                    <label>
+                                                                        Click on "Send Request" button to generate payment request on your phone. Enter your MPESA PIN on your phone to complete the payment.
+                                                                    </label>
+
+                                                                </div>
+
+                                                                    <div class="divsuccess" style="display:none" id="successMsg">
+                                                                        <div class="alert alert-success" role="alert" id="error">
+                                                                            <p id="showsuccess"></p>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="divError" style="display:none" id="errorMsg">
+                                                                        <div class="alert alert-danger" role="alert" id="error">
+                                                                            <p id="showError"></p>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <span class="input-group-btn">
+                                                                        <button type="button" onclick="SendStkPush()" class="btn btn-primary">Send Request!</button>
+                                                                    </span>
+
+                                                                </div>
+
+
                                                             </div>
-                                                        </div>
-                                                    </div>
 
-                                                    <div class="card-body inf-widget col-md-12">
-                                                        <div class="payment-widget">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row">
-                                                        <div class="">
-                                                            <label for="card_name">Enter Mpesa Reference / Transaction Number</label>
-                                                            <input type="text" class="form-control mt-2 col-md-6" placeholder="Mpesa Reference" name="TransactionNumber" id="txtTransactionNumber">
-                                                        </div>
-
-
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="thanks-message" id="text-message">
-
-
-                    <div class="success-cont  text-center" id="divmessage">
-                        <img src="/dashboard/assets/img/icons/check-circle.png" alt="logo">
-                        <h3>Appointment has been successfully booked!</h3>
-                        <p>Appointment booked with <span class="text-info"><strong>Fertitly Point</strong></span><br> on <strong>12 Nov 2019 5:00PM to 6:00PM</strong></p>
-                        <p>A copy of your invoice has been sent to your email</p>
-                        <a href="#" onclick="showInvoice()" class="btn btn-primary">View Invoice</a>
-
-                    </div>
-
-
-                    <div id="dvinvoice" style="display:none;">
-
-                        <div class="row">
-                            <div class="col-lg-8 offset-lg-2">
-                                <div class="invoice-content" style="margin-bottom: 75px;">
-                                    <div class="invoice-item">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="invoice-logo">
-                                                    <div class="row">
-
-                                                        <div class="col-md-6">
-                                                            <a href="#" class="btn btn-primary" style="background-color:#263b6b;"> <i class="fa fa-download"></i> Download </a>
-
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <h4 class="" style="color:#263b6b;font-size:24px;">INVOICE</h4>
 
                                                         </div>
                                                     </div>
+                                                </div>
+
+                                                <br />
+
+                                                <div class="payment-list">
+                                                    <label class="payment-radio paypal-option">
+                                                        <input type="radio" name="radio" onclick="payBillSelected()">
+                                                        <span class="checkmark"></span>
+                                                        Mpesa Paybill
+                                                    </label>
+
+                                                    <div class="row" style="display:none;" id="divPaybill">
+
+                                                        <div id="mpesa_paybill" class="text-center">
+                                                            <p style="color:#513c3c;">You can also pay using Lipa na MPESA by using the following instructions:</p>
+                                                                 
+                                                        </div>
+
+                                                         <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <img class="mpesa-logo" src="~/img/mpesa-logo.png" alt="Logo">
+                                                                </div>
+                                                                <div class="col-md-6">
+
+                                                                    <ol>
+                                                                        <li>Go to the M-PESA menu</li>
+                                                                        <li>Select Lipa na M-PESA</li>
+                                                                        <li> Select the Paybill option</li>
+                                                                        <li class="MpesaShortCode">Enter business number <strong>206206</strong> </li>
+                                                                        <li class="MpesaAccountNumber">Enter your account number <strong>Your National ID</strong></li>
+                                                                        <li class="MpesaAmount">Enter the amount Ksh <strong>Ksh 2,500</strong> </li>
+                                                                        <li>Enter PIN and press OK to send </li>
+
+                                                                    </ol>
+                                                                </div>
+                                                            </div>
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="card-body inf-widget col-md-12">
+                                                    <div class="payment-widget">
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="">
+                                                        <label for="card_name">Enter Mpesa Reference / Transaction Number</label>
+                                                        <input type="text" class="form-control mt-2 col-md-6" placeholder="Mpesa Reference" name="TransactionNumber" id="txtTransactionNumber">
+                                                    </div>
+
 
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <p class="invoice-details">
-                                                    <strong>Order:</strong> #00124 <br>
-                                                    <strong>Issued:</strong> 20/07/2021
-                                                </p>
-                                            </div>
+
                                         </div>
                                     </div>
-
-                                    <div class="invoice-item">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="invoice-info">
-                                                    <strong class="customer-text">Invoice From</strong>
-                                                    <p class="invoice-details invoice-details-two">
-                                                        Fertility Point, <br>
-                                                        Fortis Suites, Ground Floor 1 & 2, Hospital Road,<br>
-                                                        Nairobi, Kenya. <br>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="invoice-info invoice-info2">
-                                                    <strong class="customer-text">Invoice To</strong>
-                                                    <p class="invoice-details">
-                                                        Peter Kachezi <br>
-                                                        peterkachezi@gmail.com <br>
-                                                        0704509484 <br>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="invoice-item">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="invoice-info">
-                                                    <strong class="customer-text">Payment Method</strong>
-                                                    <p class="invoice-details invoice-details-two">
-                                                        M-Pesa <br>
-                                                        254704509484 <br>
-                                                        Trans Id:QE19A15WZ1<br>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="invoice-item invoice-table-wrap">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="table-responsive">
-                                                    <table class="invoice-table table table-bordered" id="invoice">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Description</th>
-                                                                <th class="text-center">Quantity</th>
-                                                                <th class="text-center">VAT</th>
-                                                                <th class="text-end">Total</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>General Consultation</td>
-                                                                <td class="text-center">1</td>
-                                                                <td class="text-center">Ksh0</td>
-                                                                <td class="text-end">Ksh100</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Video Call Booking</td>
-                                                                <td class="text-center">1</td>
-                                                                <td class="text-center">Ksh0</td>
-                                                                <td class="text-end">Ksh250</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 col-xl-4 ms-auto">
-                                                <div class="table-responsive">
-                                                    <table class="invoice-table-two table">
-                                                        <tbody>
-                                                            <tr>
-                                                                <th>Subtotal:</th>
-                                                                <td><span>Ksh350</span></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>Discount:</th>
-                                                                <td><span>-10%</span></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>Total Amount:</th>
-                                                                <td><span>Ksh315</span></td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-
                                 </div>
                             </div>
                         </div>
@@ -430,90 +250,80 @@
 
                 </div>
 
-                <div style="overflow:auto;" id="nextprevious">
-                    <div style="float:right;">
-                        <button type="button" class="btn btn-primary" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
-                        <button type="button" class="btn btn-outline-primary" id="nextBtn" onclick="nextPrev(1)">Next</button>
+            </div>
+
+            <div class="tab">
+
+                <div class="theiaStickySidebar" style="padding-top: 0px; padding-bottom: 1px; position: static; transform: none; left: 12px; top: 0px;">
+                    <div class="card booking-card">
+                        <div class="card-header">
+                            <h4 class="card-title">Booking Summary</h4>
+                        </div>
+                        <div class="card-body">
+
+                            <div class="booking-doc-info">
+                            </div>
+                            <br />
+                            <div class="booking-summary border-0">
+                                <div class="booking-item-wrap">
+                                    <ul class="booking-date">
+                                        <li>Date <span id="txtAppDate">12/04/2021</span></li>
+                                        <li>Time <span id="txtTimeSlotName">8:30 AM</span></li>
+                                    </ul>
+                                    <ul class="booking-fee">
+                                        <li>Appointment Fee <span>Ksh 2,500</span></li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="booking-total">
+                                <ul class="booking-total-list">
+                                    <li>
+                                        <span>Total</span>
+                                        <span class="total-cost">Ksh 2,500</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+
                     </div>
+
                 </div>
-            </form>
-        </div>
+
+            </div>
+            @*
+            <div class="tab">
+            </div>*@
+
+            <div style="overflow:auto;">
+                <div style="float:right;">
+                    <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+                    <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+                    <button type="button" id="btnSubmit" style="display:none;" onclick="SubmitAppointment()">Submit</button>
+                </div>
+            </div>
+
+            <!-- Circles which indicates the steps of the form: -->
+            <div style="text-align:center;margin-top:40px;">
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+
+
+            </div>
+        </form>
+
     </div>
-</div>
+    <link href="~/SweetAlart/sweetalert.min.css" rel="stylesheet" />
+    <script src="~/SweetAlart/sweetalert.min.js"></script>
+    <script src="~/fertilitypoint/appointment.js"></script>
 
 
-<link href="~/SweetAlart/sweetalert.min.css" rel="stylesheet" />
-<script src="~/SweetAlart/sweetalert.min.js"></script>
-<script src="~/fertilitypoint/appointment.js"></script>
 
 
-<br />
-<br />
 
-<style>
-    .booked {
-        background-color: #FF4433;
-        width: 8rem;
-        margin-left: -2rem;
-        color: #272b41;
-    }
-
-    .available {
-        background-color: #32c36c;
-        width: 8rem;
-        margin-left: -2rem;
-        color: #272b41;
-    }
-
-    .paragraph {
-        color: #272b41;
-    }
-
-    .bookedSlot {
-        margin: 4px;
-        background-color: #FF4433;
-        border-radius: 4px;
-        border: 1px solid #FF4433;
-        overflow: hidden;
-        float: left;
-        border-radius: 8px;
-        width: 11rem;
-    }
-
-
-        .bookedSlot label {
-            float: left;
-            line-height: 3.0em;
-            width: 8.0em;
-            height: 3.0em;
-        }
-
-            .bookedSlot label span {
-                text-align: center;
-                padding: 3px 0;
-                display: block;
-                width: 11rem;
-            }
-
-            .bookedSlot label input {
-                position: absolute;
-                display: none;
-                color: #fff !important;
-            }
-                /* selects all of the text within the input element and changes the color of the text */
-                .bookedSlot label input + span {
-                    color: #fff;
-                    cursor: pointer;
-                }
-
-                    .bookedSlot label input + span:hover {
-                        color: #fff;
-                        cursor: pointer;
-                    }
-
-        /* This will declare how a selected input will look giving generic properties */
-        .bookedSlot input:checked + span {
-            color: #ffffff;
-            text-shadow: 0 0 6px rgba(0, 0, 0, 0.8);
-        }
-</style>
+</body>
+</html>
