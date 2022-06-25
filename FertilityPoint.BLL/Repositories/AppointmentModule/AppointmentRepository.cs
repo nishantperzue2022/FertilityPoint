@@ -157,6 +157,8 @@ namespace FertilityPoint.BLL.Repositories.AppointmentModule
 
                                         AppointmentDate = appointment.AppointmentDate,
 
+                                        PatientId = patient.Id,
+
                                         FirstName = patient.FirstName,
 
                                         PhoneNumber = patient.PhoneNumber,
@@ -168,6 +170,8 @@ namespace FertilityPoint.BLL.Repositories.AppointmentModule
                                         TimeId = appointment.TimeId,
 
                                         ToTime = timslot.ToTime,
+
+                                        FromTime = timslot.FromTime,
 
                                     }).FirstOrDefaultAsync();
 
@@ -246,13 +250,13 @@ namespace FertilityPoint.BLL.Repositories.AppointmentModule
             }
         }
 
-        public async Task<bool> ApproveAppointment(Guid Id, string approvedBy)
+        public async Task<bool> ApproveAppointment(AppointmentDTO appointmentDTO)
         {
             try
             {
                 bool result = false;
 
-                var getAppointment = await context.Appointments.FindAsync(Id);
+                var getAppointment = await context.Appointments.FindAsync(appointmentDTO.Id);
 
                 if (getAppointment != null)
                 {
@@ -260,7 +264,7 @@ namespace FertilityPoint.BLL.Repositories.AppointmentModule
                     {
                         getAppointment.Status = 1;
 
-                        getAppointment.ApprovedBy = approvedBy;
+                        getAppointment.ApprovedBy = appointmentDTO.ApprovedBy;
 
                         transaction.Commit();
 

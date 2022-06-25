@@ -13,7 +13,7 @@ namespace FertilityPoint.DAL.Modules
         public string CheckoutRequestID { get; set; }
         public int? ResultCode { get; set; }
         public string ResultDesc { get; set; }
-        public decimal? Amount { get; set; }
+        public decimal Amount { get; set; }
         public string TransactionNumber { get; set; }
         public decimal? Balance { get; set; }
         public string TransactionDate { get; set; }

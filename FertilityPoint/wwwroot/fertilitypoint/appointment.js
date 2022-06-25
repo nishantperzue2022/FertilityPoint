@@ -1,4 +1,13 @@
-﻿
+﻿function ShowLoader() {
+
+    $("#loadMe").modal('show');
+}
+
+function HideLoader() {
+
+    $("#loadMe").modal('hide');
+}
+
 
 function GetAppDate() {
 
@@ -68,15 +77,6 @@ function payBillSelected() {
 
 }
 
-function ShowLoader() {
-
-    $("#loadMe").modal('show');
-}
-
-function HideLoader() {
-
-    $("#loadMe").modal('hide');
-}
 
 
 function SendStkPush() {
@@ -311,83 +311,7 @@ $(document).ready(function () {
 });
 
 
-function ApproveAppointment(e) {
 
-    var id = e;
-
-    swal(
-        {
-            title: "Your are about to approve this appointment, are you sure?",
-
-            //text: "Deac!",
-
-            type: "success",
-
-            showCancelButton: true,
-
-            confirmButtonColor: "##62b76e",
-
-            confirmButtonText: "Yes, Approve!",
-
-            closeOnConfirm: false
-        },
-
-        function () {
-
-            $.ajax({
-
-                type: "GET",
-
-                url: "/Admin/Appointments/ApproveAppoinment/" + id,
-
-                success: function (response) {
-
-                    if (response.success) {
-
-                        swal({
-
-                            position: 'top-end',
-
-                            type: "success",
-
-                            title: response.responseText,
-
-                            showConfirmButton: false,
-
-                        });
-                        setTimeout(function () { location.reload(); }, 3000);
-
-                    }
-
-                    else {
-                        swal({
-                            position: 'top-end',
-                            type: "error",
-                            title: response.responseText,
-                            showConfirmButton: true,
-                            timer: 5000,
-                        });
-
-                    }
-
-                },
-                error: function (response) {
-
-                    console.log(response);
-                    swal({
-                        position: 'top-end',
-                        type: "error",
-                        title: "Server error ,kindly contact the admin for assistance",
-                        showConfirmButton: false,
-                        timer: 5000,
-                    });
-
-                }
-
-            })
-
-        });
-}
 
 
 var currentTab = 0; // Current tab is set to be the first tab (0)

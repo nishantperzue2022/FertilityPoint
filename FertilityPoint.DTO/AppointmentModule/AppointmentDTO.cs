@@ -21,6 +21,7 @@ namespace FertilityPoint.DTO.AppointmentModule
         public DateTime FromTime { get; set; }
         public DateTime ToTime { get; set; }
         public DateTime AppointmentDate { get; set; }
+        public string NewAppointmentDate { get { return AppointmentDate.ToShortDateString(); } }
         public string TransactionNumber { get; set; }
         public string TimeSlot { get; set; }
 
@@ -28,9 +29,10 @@ namespace FertilityPoint.DTO.AppointmentModule
 
         public string TransactionDate { get; set; }
         public string ReceiptURL { get; set; }
-        public decimal? Amount { get; set; }
+        public decimal Amount { get; set; }
         public string ApprovedBy { get; set; }
         public string ReceiptNo { get; set; }
-        public string NewAmount { get { return Amount.Value.ToString("N"); } }
+        public string NewAmount { get { return Amount.ToString("N"); } }
+
     }
 }

@@ -51,19 +51,68 @@ namespace FertilityPoint.Areas.Admin.Controllers
             }
         }
 
-        public async Task<IActionResult> ApproveAppoinment(Guid Id, string approvedBy)
+        public async Task<IActionResult> GetById(Guid Id)
+        {
+            try
+            {
+                var appointment = await appointmentRepository.GetById(Id);
+
+                if (appointment != null)
+                {
+                    var file = new AppointmentDTO
+                    {
+                        Id = appointment.Id,
+
+                        Status = appointment.Status,
+
+                        CreateDate = appointment.CreateDate,
+
+                        AppointmentDate = appointment.AppointmentDate,
+
+                        FirstName = appointment.FirstName,
+
+                        PhoneNumber = appointment.PhoneNumber,
+
+                        Email = appointment.Email,
+
+                        LastName = appointment.LastName,
+
+                        TimeId = appointment.TimeId,
+
+                        TimeSlot = appointment.FromTime.ToString("h:mm tt") + " - " + appointment.ToTime.ToString("h:mm tt"),
+                    };
+
+                    return Json(new { data = file });
+                }
+
+                return Json(new { data = false });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                TempData["Error"] = "Something went wrong";
+
+                return RedirectToAction("Login", "Account", new { area = "" });
+            }
+
+        }
+
+
+
+        public async Task<IActionResult> ApproveAppointment(AppointmentDTO appointmentDTO)
         {
             try
             {
                 var user = await userManager.FindByEmailAsync(User.Identity.Name);
 
-                approvedBy = user.Id;
+                appointmentDTO.ApprovedBy = user.Id;
 
-                var result = await appointmentRepository.ApproveAppointment(Id, approvedBy);
+                var result = await appointmentRepository.ApproveAppointment(appointmentDTO);
 
                 if (result == true)
                 {
-                    var get_appointment = (await appointmentRepository.GetById(Id));
+                    var get_appointment = (await appointmentRepository.GetById(appointmentDTO.Id));
 
                     var appointment = new AppointmentDTO()
                     {
@@ -76,6 +125,12 @@ namespace FertilityPoint.Areas.Admin.Controllers
                         Email = get_appointment.Email,
 
                         CreateDate = get_appointment.CreateDate,
+
+                        FromTime = get_appointment.FromTime,
+
+                        ToTime = get_appointment.ToTime,
+
+                        TimeSlot = get_appointment.FromTime.ToString("h:mm tt") + " - " + get_appointment.ToTime.ToString("h:mm tt"),
                     };
 
                     var sendSMS = messagingService.ApprovalNotificationSMS(appointment);

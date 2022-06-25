@@ -231,7 +231,7 @@ namespace FertilityPoint.Controllers
 
             row["TransactionDate"] = data.TransactionDate.ToString();
 
-            row["Amount"] = data.Amount.Value.ToString("N");
+            row["Amount"] = data.Amount.ToString("N");
 
             row["ReceiptNo"] = data.ReceiptNo.ToString();
 

@@ -17,7 +17,7 @@
                     <h3 class="page-title">List of Appointments</h3>
                 </div>
                 <div class="col-md-9">
-                    @*                    <button type="button" class="btn btn-success btn-sm  pull-right" data-toggle="modal" data-target="#exampleModal" data-backdrop="static" data-keyboard="false"><i class="fa fa-plus-circle"></i>  </button>
+                    @*                    <button type="button" class="btn btn-success btn-sm  pull-right" data-toggle="modal" data-target="#ModalApproveAppointment" data-backdrop="static" data-keyboard="false"><i class="fa fa-plus-circle"></i>  </button>
                     *@
                 </div>
             </div>
@@ -66,7 +66,7 @@
                                             }
                                         </td>
                                         <td class="text-end">
-                                            <a class="btn btn-success btn-sm " href="#" onclick="ApproveAppointment('@item.Id')" value="">Approve</a>
+                                            <a class="btn btn-success btn-sm " href="#" onclick="GetAppointment('@item.Id')" value="">Approve</a>
                                         </td>
                                     </tr>
                                     count++;
@@ -81,93 +81,205 @@
 </body>
 
 
+<!-- Button trigger modal -->
+<!-- Modal -->
 
 
 
+<div class="modal fade" id="ModalApproveAppointment" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">
+                    Approve Appointment
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body ">
 
+                <form id="frmApproveAppointment">
+
+                    <input type="hidden" id="txtAppointmentId" name="Id" />
+
+                    <div class="form-group row">
+                        <div class="bg-dark col-12 text-center text-white" style="width:100px;height:80px; font-size:20px; margin-top:-1rem;">
+                            <div class="text-center">
+                                <label id="txtPatientName">   </label>
+                            </div>
+                            <div class="">
+                                <img src="~/dashboard/assets/img/patient-user-settings.png" class="img" />
+
+                            </div>
+                        </div>
+                        <br />
+
+                        <div class="col-lg-12">
+
+                            <div class="text-dark" style="font-size:15px; font-weight:bold;">
+                                <label id="NewCreateDate"></label>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="">
+
+                        <div class="">
+                            <label><strong>Phone Number:</strong></label>
+                            <label id="txtPhoneNumber">   </label>
+                        </div>
+
+                        <div class="">
+                            <label><strong>Email:</strong></label>
+                            <label id="txtEmail">   </label>
+                        </div>
+
+                        <div class="">
+                            <label><strong>Appointment Time:</strong></label>
+                            <label id="txtAppointmentTime">   </label>
+                        </div>
+                        <div class="">
+                            <label><strong>Appointment Date:</strong></label>
+                            <label id="txtAppointmentDate">   </label>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button onclick="ApproveAppointment(this)" type="button" class="btn btn-success">Approve</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <style>
-
-
-    .pending {
-        background-color: #ffbc34;
-        border-radius: 9px;
-        display: block;
-        height: 24px;
-        margin-bottom: 0;
-        position: relative;
-        width: 107px;
-        color: white;
-        text-align: center;
-    }
-
-    .activeUser {
-        background-color: #55ce63;
-        border-radius: 9px;
-        display: block;
-        height: 24px;
-        margin-bottom: 0;
-        position: relative;
-        width: 107px;
-        color: white;
-        text-align: center;
-    }
-
-    .disabledUser {
-        background-color: #e0001a;
-        border-radius: 9px;
-        display: block;
-        height: 24px;
-        margin-bottom: 0;
-        position: relative;
-        width: 107px;
-        color: white;
-        text-align: center;
+        .img {
+        height: 3em;
+        margin-top: 0em;
+        background: transparent;
+        border: 5px solid white;
+        border-radius: 40px;
     }
 </style>
-
 <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-<script src="~/fertilitypoint/appointment.js"></script>
+
 
 <script type="text/javascript">
+
     $(document).ready(function() {
         $('#specialist').DataTable();
     });
 
+    function ShowLoader() {
 
-    function GetSpeciality(e) {
+        $("#loadMe").modal('show');
+    }
 
-        $('#ModalApproval').modal({ backdrop: 'static', keyboard: false })
+    function HideLoader() {
 
-        $("#ModalApproval").modal('show');
-
-        //var id = e;
-
-        //console.log(id);
-
-        //$.get("/Admin/Specialities/GetById/?Id=" + id, function(data, status) {
-        //    console.log(data);
-        //    if (data.data == false) {
-        //        alert("Does not exist");
-        //    } else {
-
-        //        $("#txtId").val(data.data.id);
-        //        $("#txtName1").val(data.data.name);
+        $("#loadMe").modal('hide');
+    }
 
 
 
-        //        $('#modalSpecialityUpdate').modal({ backdrop: 'static', keyboard: false })
+    function ApproveAppointment() {
 
-        //        $("#modalSpecialityUpdate").modal('show');
+        $("#ModalApproveAppointment").modal('hide');
 
-        //    }
+        var data = $("#frmApproveAppointment").serialize();
 
-        //});
+        $.ajax({
+
+            type: "POST",
+
+            url: "/Admin/Appointments/ApproveAppointment/",
+
+            data: data,
+
+            beforeSend: function() { ShowLoader(); },
+
+            success: function(response) {
+
+                if (response.success) {
+
+                    swal({
+
+                        position: 'top-end',
+
+                        type: "success",
+
+                        title: response.responseText,
+
+                        showConfirmButton: false,
+
+                    }), setTimeout(function() { location.reload(); }, 3000);
+
+                } else {
+
+                    swal({
+
+                        position: 'top-end',
+
+                        type: "error",
+
+                        title: response.responseText,
+
+                        showConfirmButton: true,
+
+                        timer: 5000,
+                    });
+
+
+                }
+            },
+
+            error: function(response) {
+                alert("error!");
+            },
+            complete: function() {
+                HideLoader();
+            }
+        })
+
+    }
+
+
+    function GetAppointment(e) {
+
+        var id = e;
+
+        console.log(id);
+
+        $.get("/Admin/Appointments/GetById/?Id=" + id, function(data, status) {
+            console.log(data);
+            if (data.data == false) {
+                alert("Does not exist");
+            } else {
+
+                $("#txtAppointmentId").val(data.data.id);
+                $("#txtAppointmentTime").text(data.data.timeSlot);
+                $("#txtAppointmentDate").text(data.data.newAppointmentDate);
+                $("#txtPatientName").text(data.data.fullName);
+                $("#txtEmail").text(data.data.email);
+                $("#txtPhoneNumber").text(data.data.phoneNumber);
+                $("#txtpatientId").val(data.data.patientId);
+
+
+
+                $('#ModalApproveAppointment').modal({ backdrop: 'static', keyboard: false })
+
+                $("#ModalApproveAppointment").modal('show');
+
+            }
+
+        });
     };
-
-
-
-
 
 </script>
 
