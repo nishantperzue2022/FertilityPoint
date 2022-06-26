@@ -5,8 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using FertilityPoint.BLL.Repositories.AppointmentModule;
-using FertilityPoint.BLL.Repositories.CountyModule;
-using FertilityPoint.BLL.Repositories.SubCountyModule;
+
 using System.Linq;
 using FertilityPoint.BLL.Repositories.SpecialityModule;
 using System.Net.Http;
@@ -23,6 +22,7 @@ using AspNetCore.Reporting;
 using Microsoft.AspNetCore.Hosting;
 using FertilityPoint.DTO.TimeSlotModule;
 using Microsoft.Extensions.Configuration;
+using System.Globalization;
 
 namespace FertilityPoint.Controllers
 {
@@ -90,9 +90,12 @@ namespace FertilityPoint.Controllers
                 }
                 else
                 {
-                    if (AppointmentDate == null)
+                    if (AppointmentDate != null)
                     {
-                        DateTime oDate = Convert.ToDateTime(AppointmentDate);
+                        //DateTime oDate = Convert.ToDateTime(AppointmentDate);
+
+                        DateTime oDate = DateTime.ParseExact(AppointmentDate, "M/d/yyyy", CultureInfo.InvariantCulture);
+
 
                         var timeslot = (await timeSlotRepository.GetAll()).Where(x => x.IsBooked == 0 && x.AppointmentDate == oDate);
 

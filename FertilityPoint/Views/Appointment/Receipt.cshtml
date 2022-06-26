@@ -2,6 +2,8 @@
 @{
     ViewData["Title"] = "Invoice";
 }
+
+
 <div class="container mt-5">
     <div class="row d-flex justify-content-center align-items-center">
         <div class="col-md-10">
@@ -24,7 +26,7 @@
                     <div id="dvinvoice" style="display:none;">
 
                         <div class="row">
-                            <div class="col-md-10 offset-lg-2">
+                            <div class="col-md-10">
                                 <div class="invoice-content">
                                     <div class="invoice-item">
                                         <div class="row">
@@ -102,16 +104,16 @@
                                                         <thead>
                                                             <tr>
                                                                 <th>Service Description</th>
-                                                                <th class="text-center">Bill Reference No</th>
-                                                                <th class="text-center">Paid By</th>
+                                                                <th class="">Bill Reference No</th>
+                                                                <th class="">Paid By</th>
                                                                 <th class="text-end">Amount (Ksh)</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             <tr>
                                                                 <td>Appointment</td>
-                                                                <td class="text-center">@Model.TransactionNumber</td>
-                                                                <td class="text-center">@Model.PaidByNumber</td>
+                                                                <td class="">@Model.TransactionNumber</td>
+                                                                <td class="">@Model.PaidByNumber</td>
                                                                 <td class="text-end">@Model.NewAmount</td>
                                                             </tr>
                                                            

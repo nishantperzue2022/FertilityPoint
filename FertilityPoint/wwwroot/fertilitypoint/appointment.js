@@ -9,22 +9,7 @@ function HideLoader() {
 }
 
 
-function GetAppDate() {
 
-    var date = $('#txtAppointmentDate').val();
-
-    //day = date[2];
-
-    //month = date[1];
-
-    //year = date[0];
-
-    //var appdate = (day + " / " + month + " / " + year)
-
-    console.log(date)
-
-    $("#txtAppDate").text(date);
-}
 
 function GetTimeSlotId() {
 
@@ -419,3 +404,18 @@ function fixStepIndicator(n) {
 $(function () {
     $("#txtAppointmentDate").datepicker();
 });
+
+
+
+
+function GetAppDate() {
+
+    var date = $('#txtAppointmentDate').val();
+
+    console.log(date)
+
+    $("#txtAppDate").text(date);
+
+    //window.location.href = "/Appointment/Index?AppointmentDate=" + date;
+
+}
