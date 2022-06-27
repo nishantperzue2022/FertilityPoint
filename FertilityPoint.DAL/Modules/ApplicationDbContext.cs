@@ -21,7 +21,7 @@ namespace FertilityPoint.DAL.Modules
         public virtual DbSet<MpesaPayment> MpesaPayments { get; set; }
         public virtual DbSet<TimeSlot> TimeSlots { get; set; }
         public virtual DbSet<Patient> Patients { get; set; }
-        public virtual DbSet<AppointmentPackage> AppointmentPackages { get; set; }
+        public virtual DbSet<Service> Services { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -33,9 +33,9 @@ namespace FertilityPoint.DAL.Modules
 
             });
 
-            modelBuilder.Entity<AppointmentPackage>(entity =>
+            modelBuilder.Entity<Service>(entity =>
             {
-                entity.Property(e => e.Amount).HasColumnType("decimal(18,2)");   
+                entity.Property(e => e.Amount).HasColumnType("decimal(18,2)");
 
             });
         }

@@ -23,6 +23,7 @@ using Microsoft.AspNetCore.Hosting;
 using FertilityPoint.DTO.TimeSlotModule;
 using Microsoft.Extensions.Configuration;
 using System.Globalization;
+using FertilityPoint.BLL.Repositories.ServiceModule;
 
 namespace FertilityPoint.Controllers
 {
@@ -31,8 +32,6 @@ namespace FertilityPoint.Controllers
         private readonly IAppointmentRepository appointmentRepository;
 
         private readonly IMailService mailService;
-
-        private readonly ISpecialityRepository specialityRepository;
 
         private readonly IPaymentRepository paymentRepository;
 
@@ -43,6 +42,8 @@ namespace FertilityPoint.Controllers
         private readonly IWebHostEnvironment env;
 
         private readonly IConfiguration config;
+
+        private readonly IServicesRepository servicesRepository;
         public AppointmentController(
 
             IConfiguration config,
@@ -59,19 +60,21 @@ namespace FertilityPoint.Controllers
 
             IWebHostEnvironment env,
 
+            IServicesRepository servicesRepository,
+
             IAppointmentRepository appointmentRepository)
         {
             this.appointmentRepository = appointmentRepository;
 
             this.mailService = mailService;
 
-            this.timeSlotRepository = timeSlotRepository;
-
-            this.specialityRepository = specialityRepository;
+            this.timeSlotRepository = timeSlotRepository;            
 
             this.paymentRepository = paymentRepository;
 
             this.patientRepository = patientRepository;
+
+            this.servicesRepository = servicesRepository;
 
             this.env = env;
 
@@ -92,10 +95,8 @@ namespace FertilityPoint.Controllers
                 {
                     if (AppointmentDate != null)
                     {
-                        //DateTime oDate = Convert.ToDateTime(AppointmentDate);
 
                         DateTime oDate = DateTime.ParseExact(AppointmentDate, "M/d/yyyy", CultureInfo.InvariantCulture);
-
 
                         var timeslot = (await timeSlotRepository.GetAll()).Where(x => x.IsBooked == 0 && x.AppointmentDate == oDate);
 
@@ -359,9 +360,9 @@ namespace FertilityPoint.Controllers
                     return Json(new { success = false, responseText = "Please Enter Phone Number" });
                 }
 
-                var serviceDetails = await specialityRepository.GetById(ServiceId);
+                var get_Service_Details = await servicesRepository.GetDefault();
 
-                //int amnt = Convert.ToInt32(serviceDetails.Amount);
+                int amount = Convert.ToInt32(get_Service_Details.Amount);
 
                 var msisdn = formatPhoneNumber(PhoneNumber);
 
@@ -387,7 +388,7 @@ namespace FertilityPoint.Controllers
 
                     TransactionType = "CustomerPayBillOnline",
 
-                    Amount = 1,
+                    Amount = amount,
 
                     PartyA = msisdn,
 

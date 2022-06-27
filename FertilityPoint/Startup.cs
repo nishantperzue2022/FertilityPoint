@@ -4,6 +4,7 @@ using FertilityPoint.BLL.Repositories.AppointmentModule;
 using FertilityPoint.BLL.Repositories.CountyModule;
 using FertilityPoint.BLL.Repositories.MpesaStkModule;
 using FertilityPoint.BLL.Repositories.PatientModule;
+using FertilityPoint.BLL.Repositories.ServiceModule;
 using FertilityPoint.BLL.Repositories.SpecialityModule;
 using FertilityPoint.BLL.Repositories.SubCountyModule;
 using FertilityPoint.BLL.Repositories.TimeSlotModule;
@@ -45,8 +46,6 @@ namespace FertilityPoint
         {
             services.AddControllersWithViews();
 
-           // services.AddControllersWithViews().AddRazorRuntimeCompilation();
-
             services.AddAutoMapper(typeof(MapperProfile));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -76,6 +75,8 @@ namespace FertilityPoint
             services.AddScoped<IPatientRepository, PatientRepository>();
 
             services.AddScoped<IMessagingService, MessagingService>();
+
+            services.AddScoped<IServicesRepository, ServicesRepository>();
 
         }
 
@@ -107,6 +108,11 @@ namespace FertilityPoint
 
             app.UseEndpoints(endpoints =>
             {
+               endpoints.MapControllerRoute(
+               name: "SuperAdmin",
+               pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
+
+
                 endpoints.MapControllerRoute(
                 name: "Admin",
                 pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");

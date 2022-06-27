@@ -2,9 +2,11 @@
 using FertilityPoint.DAL.Modules;
 using FertilityPoint.DTO.ApplicationUserModule;
 using FertilityPoint.DTO.AppointmentModule;
+
 using FertilityPoint.DTO.CountyModule;
 using FertilityPoint.DTO.MpesaStkModule;
 using FertilityPoint.DTO.PatientModule;
+using FertilityPoint.DTO.ServiceModule;
 using FertilityPoint.DTO.SpecialityModule;
 using FertilityPoint.DTO.SubCountyModule;
 using FertilityPoint.DTO.TimeSlotModule;
@@ -35,6 +37,8 @@ namespace FertilityPoint.DAL.MapperProfiles
             CreateMap<TimeSlot, TimeSlotDTO>().ReverseMap();
 
             CreateMap<Patient, PatientDTO>().ReverseMap();
+
+            CreateMap<Service, ServiceDTO>().ReverseMap();
 
         }
     }
