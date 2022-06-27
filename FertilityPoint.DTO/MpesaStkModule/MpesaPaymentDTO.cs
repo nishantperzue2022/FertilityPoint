@@ -18,8 +18,7 @@ namespace FertilityPoint.DTO.MpesaStkModule
         public decimal? Balance { get; set; }
         public string TransactionDate { get; set; }
         public string PhoneNumber { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string FullName { get; set; }      
         public string ReceiptNo { get; set; }
         public byte IsPaymentUsed { get; set; }
     }

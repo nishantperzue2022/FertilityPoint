@@ -28,11 +28,32 @@ namespace FertilityPoint.BLL.Repositories.MpesaStkModule
         {
             try
             {
-                var data = await context.MpesaPayments.ToListAsync();
+                var mpesaPayments = (from payment in context.MpesaPayments
 
-                var mpesaPayments = mapper.Map<List<MpesaPayment>, List<MpesaPaymentDTO>>(data);
+                                     join appointment in context.Appointments on payment.TransactionNumber equals appointment.TransactionNumber
 
-                return mpesaPayments;
+                                     join patient in context.Patients on appointment.PatientId equals patient.Id
+
+                                     select new MpesaPaymentDTO
+                                     {
+                                         ReceiptNo = payment.ReceiptNo,
+
+                                         Id = payment.Id,
+
+                                         Amount = Math.Round(payment.Amount, 2),
+
+                                         TransactionNumber = payment.TransactionNumber,
+
+                                         PhoneNumber = payment.PhoneNumber,
+
+                                         TransactionDate = payment.TransactionDate,
+
+                                         FullName = patient.FirstName +" " + patient.LastName,
+
+                                     }).ToListAsync();
+
+                return await mpesaPayments;
+
             }
             catch (Exception ex)
             {
@@ -166,7 +187,7 @@ namespace FertilityPoint.BLL.Repositories.MpesaStkModule
                     PhoneNumber = mpesaPaymentDTO.PhoneNumber,
 
                     ReceiptNo = mpesaPaymentDTO.ReceiptNo,
-                 
+
                 };
 
                 context.MpesaPayments.Add(transaction);
