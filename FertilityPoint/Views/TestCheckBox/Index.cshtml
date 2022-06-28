@@ -45,34 +45,24 @@
                                     <div class="row">
                                         <div class="col-md-12">
 
-                                            @if (Model != null && Model.Count() > 0)
-                                            {
-                                                @foreach (var item in Model)
-                                                {
-                                                    var slotStatus = item.IsBooked;
-
-
-                                                    <div class="cat action">
-                                                        <label>
-                                                            <input class="txtTime" onchange="GetTimeSlotId(this)" type="checkbox" id="txtTimeId" name="TimeId" value="@item.Id">
-                                                            <span id="spanid">@item.TimeSlot</span>
-
-                                                        </label>
+                                            <div>
+                                                <label>
+                                                    <div id="container">
                                                     </div>
+                                                </label>
+                                            </div>
 
-                                                }
-                                            }
-                                            else
-                                            {
+
+                                            <div id="divShowMessage" style="display:none;">
                                                 <div class="alert alert-danger" role="alert" id="error">
-                                                    There are no slots at the moment please check gain later
+                                                    <div id="divmessage"></div>
                                                 </div>
+                                            </div>
 
-                                            }
+
                                         </div>
                                     </div>
                                 </div>
-
 
 
                             </div>
@@ -143,24 +133,24 @@
                                                         </label>
 
                                                         <div class="row" style="display:none;" id="divSTK">
-                                                                                                              
+
 
 
                                                             <div class="row">
 
-                                                                 <div class="col-md-4">
+                                                                <div class="col-md-4">
                                                                     <img class="mpesa-logo" src="~/img/mpesa-logo.png" alt="Logo">
                                                                 </div>
                                                                 <div class="col-md-6">
 
-                                                                    
-                                                         
-                                                                <div class="form-group">
-                                                                    <label>
-                                                                        Click on "Send Request" button to generate payment request on your phone. Enter your MPESA PIN on your phone to complete the payment.
-                                                                    </label>
 
-                                                                </div>
+
+                                                                    <div class="form-group">
+                                                                        <label>
+                                                                            Click on "Send Request" button to generate payment request on your phone. Enter your MPESA PIN on your phone to complete the payment.
+                                                                        </label>
+
+                                                                    </div>
 
                                                                     <div class="divsuccess" style="display:none" id="successMsg">
                                                                         <div class="alert alert-success" role="alert" id="error">
@@ -201,27 +191,27 @@
 
                                                         <div id="mpesa_paybill" class="text-center">
                                                             <p style="color:#513c3c;">You can also pay using Lipa na MPESA by using the following instructions:</p>
-                                                                 
+
                                                         </div>
 
-                                                         <div class="row">
-                                                                <div class="col-md-4">
-                                                                    <img class="mpesa-logo" src="~/img/mpesa-logo.png" alt="Logo">
-                                                                </div>
-                                                                <div class="col-md-6">
-
-                                                                    <ol>
-                                                                        <li>Go to the M-PESA menu</li>
-                                                                        <li>Select Lipa na M-PESA</li>
-                                                                        <li> Select the Paybill option</li>
-                                                                        <li class="MpesaShortCode">Enter business number <strong>206206</strong> </li>
-                                                                        <li class="MpesaAccountNumber">Enter your account number <strong>Your National ID</strong></li>
-                                                                        <li class="MpesaAmount">Enter the amount Ksh <strong>Ksh 2,500</strong> </li>
-                                                                        <li>Enter PIN and press OK to send </li>
-
-                                                                    </ol>
-                                                                </div>
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <img class="mpesa-logo" src="~/img/mpesa-logo.png" alt="Logo">
                                                             </div>
+                                                            <div class="col-md-6">
+
+                                                                <ol>
+                                                                    <li>Go to the M-PESA menu</li>
+                                                                    <li>Select Lipa na M-PESA</li>
+                                                                    <li> Select the Paybill option</li>
+                                                                    <li class="MpesaShortCode">Enter business number <strong>206206</strong> </li>
+                                                                    <li class="MpesaAccountNumber">Enter your account number <strong>Your National ID</strong></li>
+                                                                    <li class="MpesaAmount">Enter the amount Ksh <strong>Ksh 2,500</strong> </li>
+                                                                    <li>Enter PIN and press OK to send </li>
+
+                                                                </ol>
+                                                            </div>
+                                                        </div>
 
                                                     </div>
                                                 </div>
@@ -317,13 +307,95 @@
         </form>
 
     </div>
+
     <link href="~/SweetAlart/sweetalert.min.css" rel="stylesheet" />
     <script src="~/SweetAlart/sweetalert.min.js"></script>
     <script src="~/fertilitypoint/appointment.js"></script>
-
-
-
-
-
 </body>
 </html>
+
+<style>
+
+</style>
+
+
+
+<script>
+
+    $(document).ready(function() {
+
+        //$.ajax({
+        //    type: "GET",
+        //    url: "/TestCheckBox/GetSlots/",
+        //    data: "{}",
+
+        //    success: function(data) {
+
+        //        var arr = data;
+
+        //        $.each(arr, function(index, value) {
+
+        //            console.log('The value at arr [' + index + '] is : ' + value);
+
+        //            console.log(value);
+
+        //            var checkbox = document.createElement('input');
+        //            checkbox.type = 'checkbox';
+        //            checkbox.id = 'txtTimeId';
+        //            checkbox.name = 'TimeId';
+        //            checkbox.value = value.slotId;
+        //            checkbox.onchange = GetTimeSlotId;
+
+
+
+        //            var span = document.createElement('span');
+        //            span.htmlFor = 'timeSlot';
+        //            span.appendChild(document.createTextNode(value.slotName));
+
+
+        //            var container = document.getElementById('container');
+        //            container.appendChild(checkbox);
+        //            container.appendChild(span);
+
+
+
+        //        });
+
+        //    }
+
+        //});
+
+    });
+
+
+    function GetTimeSlotId() {
+
+        var timeslotid = $('[id*="txtTime"]:checked').map(function() { return $(this).val().toString(); }).get().join(",");
+
+        console.log(timeslotid);
+
+
+
+        $.get("/Appointment/GetSlotById/?Id=" + timeslotid, function(data, status) {
+
+            console.log(data);
+
+            if (data.data == false) {
+                /*  alert("Does not exist");*/
+            } else {
+
+                $("#txtId").val(data.data.id);
+                $("#txtTimeSlotName").text(data.data.timeSlot);
+            }
+
+        });
+
+    }
+
+
+
+
+
+
+
+</script>

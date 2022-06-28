@@ -39,7 +39,7 @@ namespace FertilityPoint.Controllers
 
                 SlotName = x.TimeSlot
 
-            }).ToList());
+            }));
 
         }
     }

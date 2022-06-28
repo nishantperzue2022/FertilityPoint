@@ -68,7 +68,7 @@ namespace FertilityPoint.Controllers
 
             this.mailService = mailService;
 
-            this.timeSlotRepository = timeSlotRepository;            
+            this.timeSlotRepository = timeSlotRepository;
 
             this.paymentRepository = paymentRepository;
 
@@ -81,29 +81,14 @@ namespace FertilityPoint.Controllers
             this.config = config;
 
         }
-        public async Task<IActionResult> Index(string AppointmentDate)
+        public async Task<IActionResult> Index()
         {
             try
             {
-                if (AppointmentDate == null)
-                {
-                    var timeslot = (await timeSlotRepository.GetAll()).Where(x => x.IsBooked == 0).OrderBy(x => x.FromTime).ToList();
 
-                    return View(timeslot);
-                }
-                else
-                {
-                    if (AppointmentDate != null)
-                    {
+                var timeslot = (await timeSlotRepository.GetAll()).Where(x => x.IsBooked == 0).OrderBy(x => x.FromTime).ToList();
 
-                        DateTime oDate = DateTime.ParseExact(AppointmentDate, "M/d/yyyy", CultureInfo.InvariantCulture);
-
-                        var timeslot = (await timeSlotRepository.GetAll()).Where(x => x.IsBooked == 0 && x.AppointmentDate == oDate);
-
-                        return View(timeslot);
-                    }
-                }
-                return View();
+                return View(timeslot);
 
             }
             catch (Exception ex)
@@ -558,7 +543,34 @@ namespace FertilityPoint.Controllers
             }
         }
 
+        public async Task<IActionResult> GetSlots()
+        {
+            var timeslot = (await timeSlotRepository.GetAll()).Where(x => x.IsBooked == 0).OrderBy(x => x.TimeSlot).ToList();
 
+            return Json(timeslot.Select(x => new
+            {
+                SlotId = x.Id,
+
+                SlotName = x.TimeSlot
+
+            }));
+
+        }
+        public async Task<IActionResult> GetSlotsByAppointmentDate(string AppointmentDate)
+        {
+            DateTime oDate = DateTime.ParseExact(AppointmentDate, "M/d/yyyy", CultureInfo.InvariantCulture);
+
+            var timeslot = (await timeSlotRepository.GetAll()).Where(x => x.IsBooked == 0 && x.AppointmentDate == oDate);
+
+            return Json(timeslot.Select(x => new
+            {
+                SlotId = x.Id,
+
+                SlotName = x.TimeSlot
+
+            }));
+
+        }
 
     }
 }

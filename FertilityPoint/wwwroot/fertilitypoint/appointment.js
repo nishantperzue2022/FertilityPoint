@@ -407,7 +407,6 @@ $(function () {
 
 
 
-
 function GetAppDate() {
 
     var date = $('#txtAppointmentDate').val();
@@ -416,6 +415,73 @@ function GetAppDate() {
 
     $("#txtAppDate").text(date);
 
-    //window.location.href = "/Appointment/Index?AppointmentDate=" + date;
+    $.ajax({
+        type: "GET",
+        url: "/Appointment/GetSlotsByAppointmentDate?AppointmentDate=" + date,
+        data: "{}",
+
+        success: function (data) {
+
+
+            var arr = data;
+
+            if (arr.length == 0) {
+
+                $('#container').hide();
+
+                $('#divShowMessage').show();
+
+                $("#divmessage").html("Sorry ,there no slots on the selected date ,please select another date");
+            } else {
+
+                $('#container').show();
+
+                $('#divShowMessage').hide();
+
+                $.each(arr, function (index, value) {
+
+                    //console.log('The value at arr [' + index + '] is : ' + value);
+
+                    console.log(value);
+
+                    var checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.id = 'txtTimeId';
+                    checkbox.name = 'TimeId';
+                    checkbox.value = value.slotId;
+                    checkbox.onchange = GetTimeSlotId;
+
+
+
+                    var span = document.createElement('span');
+                    span.htmlFor = 'timeSlot';
+                    span.appendChild(document.createTextNode(value.slotName));
+                    $("#divmessage").html();
+
+                    var container = document.getElementById('container');
+                    container.appendChild(checkbox);
+                    container.appendChild(span);
+
+
+
+                });
+            }
+
+
+
+        }
+
+    });
+
+
+
+
+
+
+
+
+
+
 
 }
+

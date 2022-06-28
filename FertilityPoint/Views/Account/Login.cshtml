@@ -123,12 +123,8 @@
 
                 } else {
 
-                    $('#divmessage').prop('style', 'color: green');
-
                     var role = result.role;
-
-                    console.log(role);
-
+                       
                     if (role == "Admin") {
 
                         window.location = "@Url.Action("Index","Dashboard", new { area="Admin" })";
