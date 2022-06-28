@@ -16,6 +16,7 @@ namespace FertilityPoint.DTO.ApplicationUserModule
         public string Password { get; set; }
         public string NewPassword { get; set; }
         public string ConfirmPassword { get; set; }
+        public string ReturnUrl { get; set; }
         public bool RemeberMe { get; set; }
 
     }
