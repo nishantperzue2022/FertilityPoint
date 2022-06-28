@@ -44,7 +44,9 @@ namespace FertilityPoint.Controllers
         {
             try
             {
-                return View();
+                LoginDTO loginModel = new LoginDTO();
+
+                return View(loginModel);
             }
             catch (Exception ex)
             {
@@ -89,80 +91,75 @@ namespace FertilityPoint.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                string message;
+
+                int responsetypeid;
+
+                var user = await userManager.FindByEmailAsync(loginDTO.Email);
+
+                if (user == null)
                 {
-                    var user = await userManager.FindByEmailAsync(loginDTO.Email);
+                    message = "Invalid user account";
 
-                    if (user == null)
-                    {
-                        TempData["Error"] = "Invalid user account / Account does not exist";
+                    responsetypeid = 0;
 
-                        return RedirectToAction("Login", "Account");
-                    }
-
-                    if (user.isActive == false)
-                    {
-                        TempData["Error"] = "Your account has  been de-activated,kindly contact system administrator";
-
-                        return RedirectToAction("Login", "Account");
-                    }
-
-                    var result = await signInManager.PasswordSignInAsync(loginDTO.Email, loginDTO.Password, loginDTO.RemeberMe, lockoutOnFailure: true);
-
-                    if (result.Succeeded)
-                    {
-                        var getUserRole = (await userManager.GetRolesAsync(user)).FirstOrDefault();
-
-                        if (getUserRole == null)
-                        {
-                            TempData["Error"] = "The user has not been mapped to roles";
-
-                            return RedirectToAction("Login", "Account");
-                        }
-
-                        if (getUserRole == "Admin")
-                        {
-                            return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
-                        }
-
-                        if (getUserRole == "Doctor")
-                        {
-                            return RedirectToAction("Index", "Dashboard", new { area = "Doctor" });
-                        }
-
-
-                        else
-                        {
-                            return RedirectToAction("Login", "Account");
-                        }
-                    }
-
-                    if (result.IsLockedOut)
-                    {
-                        TempData["Error"] = "This account has been locked out,please try again later";
-
-                        return RedirectToAction("Login", "Account");
-                    }
-                    else
-                    {
-                        TempData["Error"] = "Wrong user name or password";
-
-                        return RedirectToAction("Login", "Account");
-
-                    }
+                    return Json(new { message = message, status = responsetypeid });
                 }
 
-                TempData["Error"] = "Something went wrong";
+                if (user.isActive == false)
+                {
 
-                return RedirectToAction("Login", "Account");
+                    message = "Your account has been de-activated,kindly contact system administrator";
+
+                    responsetypeid = 0;
+
+                    return Json(new { message = message, status = responsetypeid });
+                }
+
+                var result = await signInManager.PasswordSignInAsync(loginDTO.Email, loginDTO.Password, loginDTO.RemeberMe, lockoutOnFailure: true);
+
+                if (result.Succeeded)
+                {
+                    var getUserRole = (await userManager.GetRolesAsync(user)).FirstOrDefault();
+
+                    message = "successful login";
+
+                    responsetypeid = 1;
+
+                    return Json(new { message = message, status = responsetypeid, role = getUserRole });
+
+                }
+
+                if (result.IsLockedOut)
+                {
+                    message = "This account has been locked out,please try again later";
+
+                    responsetypeid = 0;
+
+                    return Json(new { message = message, status = responsetypeid });
+
+                }
+                else
+                {
+
+                    message = "Wrong user name or password";
+
+                    responsetypeid = 0;
+
+                    return Json(new { message = message, status = responsetypeid });
+
+                }
+
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
 
-                TempData["Error"] = "Something went wrong";
+                var message = "Something went wrong";
 
-                return RedirectToAction("Login", "Account");
+                var responsetypeid = 0;
+
+                return Json(new { message = message, status = responsetypeid });
             }
 
         }
@@ -242,9 +239,6 @@ namespace FertilityPoint.Controllers
                 return null;
             }
         }
-
-
-
         public async Task<IActionResult> SendPassword(ResetPasswordDTO resetPasswordDTO)
         {
             try
@@ -302,7 +296,6 @@ namespace FertilityPoint.Controllers
 
         }
 
-
         public IActionResult ForgotPassword()
         {
             try
@@ -316,7 +309,6 @@ namespace FertilityPoint.Controllers
                 return null;
             }
         }
-
         public IActionResult ResetPasswordConfirmation()
         {
             try
@@ -394,9 +386,6 @@ namespace FertilityPoint.Controllers
 
             }
         }
-
-
-
         public IActionResult Agents()
         {
             try

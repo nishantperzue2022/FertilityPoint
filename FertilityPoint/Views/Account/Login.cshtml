@@ -1,8 +1,7 @@
-﻿@{
-    ViewData["Title"] = "Index";
+﻿@model FertilityPoint.DTO.ApplicationUserModule.LoginDTO
+@{
     Layout = null;
 }
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -35,40 +34,30 @@
                     <div class="login-right">
                         <div class="login-right-wrap">
                             <h1>Login</h1>
-                            @*                            <p class="account-subtitle">Access to our dashboard</p>
-                            *@
-                            @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+
+                            @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @Id = "formlogin" }))
                             {
 
-                                @if (TempData["Error"] != null)
-                                {
+                                <div id="divShowMessage" style="display:none;">
                                     <div class="alert alert-danger" role="alert" id="error">
-                                        @TempData["Error"].ToString()
+                                        <div id="divmessage"></div>
                                     </div>
-                                }
+                                </div>
+
                                 <div class="form-group">
-                                    <input class="form-control" type="text" placeholder="Email" name="Email" id="UserName">
+                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Enter login id" })
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" type="password" placeholder="Password"  name="Password" id="Password">
+                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Enter password" })
                                 </div>
                                 <div class="form-group">
-                                    <button class="btn btn-primary w-100" type="submit">Login</button>
+                                    <input type="button" class="btn btn-primary w-100" value="Login" onclick="javascript: UserLoginValudation();" id="btnLogin" />
+
                                 </div>
                             }
 
                             <div class="text-center forgotpass"><a href="forgot-password.html">Forgot Password?</a></div>
-                        @*    <div class="login-or">
-                                <span class="or-line"></span>
-                                <span class="span-or">or</span>
-                            </div>
-*@
-                           @* <div class="social-login">
-                                <span>Login with</span>
-                                <a href="#" class="facebook"><i class="fa fa-facebook"></i></a><a href="#" class="google"><i class="fa fa-google"></i></a>
-                            </div>
 
-                            <div class="text-center dont-have">Don’t have an account? <a href="register.html">Register</a></div>*@
                         </div>
                     </div>
                 </div>
@@ -88,5 +77,78 @@
 
 </body>
 
+<script src="~/lib/jquery/dist/jquery.js"></script>
 
-</html>
+<script>
+
+    var UserLoginValudation = function() {
+
+        //To capture the form data
+
+        var formData = new FormData();
+
+        var formcontroldata = $("#formlogin").serializeArray();
+
+        $.each(formcontroldata, function(i, field) {
+
+            formData.append(field.name, field.value);
+
+        });
+
+        $("#btnLogin").val("Please wait..");
+
+        //To make the ajax request
+
+        $.ajax({
+
+            url: $("#formlogin").attr('action'),
+
+            type: $("#formlogin").attr('method'),
+
+            data: formData,
+
+            contentType: false, // Not to set any content header
+
+            processData: false, // Not to process data
+
+            dataType: 'json',
+
+            cache: false,
+
+            success: function(result) {
+
+                if (result.status == 0) {
+
+                    $('#divShowMessage').show();
+
+                } else {
+
+                    $('#divmessage').prop('style', 'color: green');
+
+                    var role = result.role;
+
+                    console.log(role);
+
+                    if (role == "Admin") {
+
+                        window.location = "@Url.Action("Index","Dashboard", new { area="Admin" })";
+                    }
+                    else {
+                        alert("No environment for you")
+
+                        location.reload();
+                    }
+
+                }
+
+                $("#btnLogin").val("Login");
+
+                $("#divmessage").html(result.message);
+
+            }
+
+        });
+
+    };
+
+</script>
