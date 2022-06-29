@@ -24,19 +24,16 @@
                                 <div class="schedule-header">
                                     <div class="date-booking">
                                         <div class="row align-items-center">
-                                            <div class="col-12 col-sm-6 col-md-4 col-lg-4">
-                                                <h4 class="mb-0">@DateTime.Now.ToString("dd MMM yyyy") </h4>
-                                            </div>
-                                            <div class="col-12 col-sm-6 col-md-2 col-lg-4 text-sm-center">
-                                                <p class="text-muted mb-0">@DateTime.Now.ToString("dddd")</p>
-                                            </div>
-                                            <div class="col-sm-4 text-md-end">
-                                                <div class="bookingrange">
 
-                                                    <input type="text" name="AppointmentDate" onchange="GetAppDate(this)" id="txtAppointmentDate" class="form-control" autocomplete="off" />
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Select Appointment Date</label>
+                                                    <input type="text" name="NewAppointmentDate" onchange="GetAppDate(this)" id="txtAppointmentDate" class="form-control" value='@DateTime.Now.ToString("MM/dd/yyyy")' autocomplete="off" />
 
                                                 </div>
                                             </div>
+
+
                                         </div>
                                     </div>
                                 </div>
@@ -44,23 +41,19 @@
                                 <div class="schedule-cont">
                                     <div class="row">
                                         <div class="col-md-12">
-
-                                            <div>
-                                                <label>
-                                                    <div id="container">
-                                                    </div>
-                                                </label>
+                                            <div id="slots">
                                             </div>
-
-
-                                            <div id="divShowMessage" style="display:none;">
-                                                <div class="alert alert-danger" role="alert" id="error">
-                                                    <div id="divmessage"></div>
-                                                </div>
-                                            </div>
-
 
                                         </div>
+
+
+                                        <div id="divShowMessage" style="display:none;">
+                                            <div class="alert alert-danger" role="alert" id="error">
+                                                <div id="divmessage"></div>
+                                            </div>
+                                        </div>
+
+
                                     </div>
                                 </div>
 
@@ -316,6 +309,30 @@
 
 <style>
 
+    .label {
+        border: 1px solid grey;
+        margin: 5px;
+        padding: 10px;
+        cursor: pointer;
+        width: 13rem;
+        color: #455A64;
+    }
+
+
+
+    input[type='radio']:before {
+        content: '';
+        display: block;
+        width: 60%;
+        height: 60%;
+        margin: 20% auto;
+        border-radius: 50%;
+    }
+
+    input[type='radio']:checked:before {
+        background: red;
+    }
+
 </style>
 
 
@@ -324,51 +341,70 @@
 
     $(document).ready(function() {
 
-        //$.ajax({
-        //    type: "GET",
-        //    url: "/TestCheckBox/GetSlots/",
-        //    data: "{}",
+        $.ajax({
+            type: "GET",
+            url: "/Appointment/GetSlots/",
+            data: "{}",
 
-        //    success: function(data) {
+            success: function(data) {
 
-        //        var arr = data;
+                var arr = data;
 
-        //        $.each(arr, function(index, value) {
-
-        //            console.log('The value at arr [' + index + '] is : ' + value);
-
-        //            console.log(value);
-
-        //            var checkbox = document.createElement('input');
-        //            checkbox.type = 'checkbox';
-        //            checkbox.id = 'txtTimeId';
-        //            checkbox.name = 'TimeId';
-        //            checkbox.value = value.slotId;
-        //            checkbox.onchange = GetTimeSlotId;
+                if (arr.length == 0) {
 
 
+                    $('#slots').hide();
 
-        //            var span = document.createElement('span');
-        //            span.htmlFor = 'timeSlot';
-        //            span.appendChild(document.createTextNode(value.slotName));
+                    $('#divShowMessage').show();
+
+                    $("#divmessage").html("Sorry ,there no slots on the selected date ,please select another date");
+                } else {
+
+                    $('#slots').show();
+
+                    $('#divShowMessage').hide();
+
+                    $('#slots').empty();
+
+                    $.each(arr, function(index, value) {
+
+                        //console.log('The value at arr [' + index + '] is : ' + value);
+
+                        console.log(value);
+
+                        let label = document.createElement("label");
+                        label.innerText = value.slotName;
+                        label.classList.add('btn');
+                        label.classList.add('btn-outline-primary');
+                        label.classList.add('label');
+
+                        let input = document.createElement("input");
+                        input.type = "radio";
+                        input.id = "txtTimeId";
+                        input.name = "TimeId";
+                        input.value = value.slotId;
+                        input.onchange = GetTimeSlotId;
 
 
-        //            var container = document.getElementById('container');
-        //            container.appendChild(checkbox);
-        //            container.appendChild(span);
+                        label.appendChild(input);
+                        slots.appendChild(label);
 
 
+                    });
+                }
 
-        //        });
+            }
 
-        //    }
-
-        //});
+        });
 
     });
 
 
+
     function GetTimeSlotId() {
+
+
+
 
         var timeslotid = $('[id*="txtTime"]:checked').map(function() { return $(this).val().toString(); }).get().join(",");
 
@@ -391,8 +427,6 @@
         });
 
     }
-
-
 
 
 

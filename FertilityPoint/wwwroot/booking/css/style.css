@@ -109,14 +109,14 @@ input, button, a {
     box-shadow: inherit
 }
 
-.form-control {
+/*.form-control {
     border-color: #ebebeb;
     border-radius: 8px;
     color: #000;
-    font-size: 15px;
+    font-size: 15px;*/
 /*    min-height: 50px;*/
-    padding: 10px 15px
-}
+    /*padding: 10px 15px
+}*/
 
     .form-control[type=file] {
         min-height: auto

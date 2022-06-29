@@ -232,9 +232,9 @@ namespace FertilityPoint.Controllers
         {
             try
             {
-                var appointmentDate = appointmentDTO.AppointmentDate;
+                var appointmentDate = appointmentDTO.NewAppointmentDate;               
 
-                DateTime oDate = Convert.ToDateTime(appointmentDate);
+                DateTime oDate = DateTime.ParseExact(appointmentDate, "M/d/yyyy", CultureInfo.InvariantCulture);
 
                 appointmentDTO.AppointmentDate = oDate;
 
@@ -545,7 +545,11 @@ namespace FertilityPoint.Controllers
 
         public async Task<IActionResult> GetSlots()
         {
-            var timeslot = (await timeSlotRepository.GetAll()).Where(x => x.IsBooked == 0).OrderBy(x => x.TimeSlot).ToList();
+            DateTime todaysDate = DateTime.Now;
+
+            var slotDate = todaysDate.Date;
+
+            var timeslot = (await timeSlotRepository.GetAll()).Where(x => x.IsBooked == 0 && x.AppointmentDate== slotDate).OrderBy(x => x.TimeSlot).ToList();
 
             return Json(timeslot.Select(x => new
             {
