@@ -1,4 +1,109 @@
-﻿function ShowLoader() {
+﻿
+$(document).ready(function () {
+
+    $.ajax({
+        type: "GET",
+        url: "/Appointment/GetSlots/",
+        data: "{}",
+
+        success: function (data) {
+
+            var arr = data;
+
+            if (arr.length == 0) {
+
+
+                $('#slots').hide();
+
+                $('#divShowMessage').show();
+
+                $("#divmessage").html("Sorry ,there no slots on the selected date ,please select another date");
+            } else {
+
+                $('#slots').show();
+
+                $('#divShowMessage').hide();
+
+                $('#slots').empty();
+
+                $.each(arr, function (index, value) {
+
+                    //console.log('The value at arr [' + index + '] is : ' + value);
+
+                    console.log(value);
+
+                    let label = document.createElement("label");
+                    label.innerText = value.slotName;
+                    label.classList.add('btn');
+                    label.classList.add('btn-outline-primary');
+                    label.classList.add('label');
+
+                    let input = document.createElement("input");
+                    input.type = "radio";
+                    input.id = "txtTimeId";
+                    input.name = "TimeId";
+                    input.value = value.slotId;
+                    input.onchange = GetTimeSlotId;
+
+                    label.appendChild(input);
+                    slots.appendChild(label);
+
+
+                });
+            }
+
+        }
+
+    });
+
+});
+
+
+
+function GetTimeSlotId() {
+
+
+
+
+    var timeslotid = $('[id*="txtTime"]:checked').map(function () { return $(this).val().toString(); }).get().join(",");
+
+    console.log(timeslotid);
+
+
+
+    $.get("/Appointment/GetSlotById/?Id=" + timeslotid, function (data, status) {
+
+        console.log(data);
+
+        if (data.data == false) {
+            /*  alert("Does not exist");*/
+        } else {
+
+            $("#txtId").val(data.data.id);
+            $("#txtTimeSlotName").text(data.data.timeSlot);
+        }
+
+    });
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function ShowLoader() {
 
     $("#loadMe").modal('show');
 }
@@ -43,8 +148,8 @@ function payBillSelected() {
 
 function SendStkPush() {
 
-    if ($('#txtPhoneNumber').val() == '') {
-        $('#txtPhoneNumber').focus();
+    if ($('#txtMpesaPhoneNumber').val() == '') {
+        $('#txtMpesaPhoneNumber').focus();
         swal({
             position: 'top-end',
             type: "error",
@@ -57,7 +162,7 @@ function SendStkPush() {
 
     $("#loadMe").modal('show');
 
-    var phoneNumber = document.getElementById("txtPhoneNumber").value;
+    var phoneNumber = document.getElementById("txtMpesaPhoneNumber").value;
 
     var link = "/Appointment/MpesaSTKPush?PhoneNumber=" + phoneNumber;
 
