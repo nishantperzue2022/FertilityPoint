@@ -1,5 +1,27 @@
 ﻿$(document).ready(function () {
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     $.ajax({
         type: "GET",
         url: "/Appointment/GetSlots/",
@@ -47,6 +69,7 @@
                     label.appendChild(input);
                     slots.appendChild(label);
 
+                    IsRadioChecked();
 
                 });
             }
@@ -57,6 +80,27 @@
 
 });
 
+function IsRadioChecked() {
+
+    $('input[type="radio"]').click(function () {
+
+        var value = $(this);
+
+        var label = value.parent();
+
+
+        // first make ALL labels normal
+
+        label.parent().parent().find('label').css('background', '#fff');
+        label.parent().find('label').css('color', '#455A64');
+
+        // then color just THIS one
+        label.css('background', '#0071dc');
+        label.css('color', '#fff');
+
+
+    });
+}
 
 
 function GetTimeSlotId() {
@@ -64,11 +108,12 @@ function GetTimeSlotId() {
 
 
 
+
+
+
     var timeslotid = $('[id*="txtTime"]:checked').map(function () { return $(this).val().toString(); }).get().join(",");
 
     console.log(timeslotid);
-
-
 
     $.get("/Appointment/GetSlotById/?Id=" + timeslotid, function (data, status) {
 
@@ -592,7 +637,7 @@ function GetAppDate() {
                     label.appendChild(input);
                     slots.appendChild(label);
 
-
+                    IsRadioChecked();
 
                 });
             }

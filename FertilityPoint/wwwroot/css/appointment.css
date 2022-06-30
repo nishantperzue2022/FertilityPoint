@@ -200,10 +200,10 @@ div label input {
                 }
 
     /* This will declare how a selected input will look giving generic properties */
-    .cat input:checked + span {
-        color: #ffffff;
-        text-shadow: 0 0 6px rgba(0, 0, 0, 0.8);
-    }
+.radio-button input:checked + label {
+    color: #ffffff;
+    text-shadow: 0 0 6px rgba(0, 0, 0, 0.8);
+}
 
 
 /*
@@ -211,7 +211,7 @@ div label input {
                                     */
 
 
-.action input:checked + span {
+.radio-button input:checked + label {
     background-color: #808080;
     border-block-color: #808080;
 }
