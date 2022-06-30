@@ -1,5 +1,4 @@
-﻿
-$(document).ready(function () {
+﻿$(document).ready(function () {
 
     $.ajax({
         type: "GET",
@@ -87,22 +86,6 @@ function GetTimeSlotId() {
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function ShowLoader() {
 
     $("#loadMe").modal('show');
@@ -112,11 +95,6 @@ function HideLoader() {
 
     $("#loadMe").modal('hide');
 }
-
-
-
-
-
 
 
 function stkSelected() {
@@ -145,8 +123,72 @@ function payBillSelected() {
 }
 
 
-
 function SendStkPush() {
+
+    if ($('#txtMpesaPhoneNumber').val() == '') {
+        $('#txtMpesaPhoneNumber').focus();
+        swal({
+            position: 'top-end',
+            type: "error",
+            title: "Please enter mpesa Phone Number",
+            showConfirmButton: true,
+        });
+        return false;
+    }
+
+    $("#loadMe").modal('show');
+
+    var data = { PhoneNumber: $('#txtMpesaPhoneNumber').val() };
+
+    console.log(data);
+
+    $.ajax({
+        type: 'POST',
+        data: data,
+        url: '/Appointment/MpesaSTKPush/',
+
+
+        success: function (response) {
+
+            console.log(response);
+
+            if (response.success == true) {
+
+                $("#loadMe").modal('hide');
+
+                document.getElementById("successMsg").style.display = "block";
+
+                $("#showsuccess").text(response.responseText);
+
+            }
+
+            else {
+
+                $("#loadMe").modal('hide');
+
+                document.getElementById("errorMsg").style.display = "block";
+
+                $("#showError").text(response.responseText);
+            }
+
+
+
+        },
+
+        error: function (response) {
+            $("#loadMe").modal('hide');
+
+            document.getElementById("errorMsg").style.display = "block";
+
+            $("#showError").text("Something went wrong");
+        }
+    });
+}
+
+
+
+
+function SendStkPushOne() {
 
     if ($('#txtMpesaPhoneNumber').val() == '') {
         $('#txtMpesaPhoneNumber').focus();
@@ -295,6 +337,8 @@ function SubmitAppointment() {
         return false;
     }
 
+    $("#loadMe").modal('show');
+
     var data = $("#frmSubAppointment").serialize();
 
     $.ajax({
@@ -305,8 +349,6 @@ function SubmitAppointment() {
 
         data: data,
 
-        beforeSend: function () { ShowLoader(); },
-
         success: function (response) {
 
             if (response.success) {
@@ -316,18 +358,6 @@ function SubmitAppointment() {
                 console.log(appointmentId);
 
                 setTimeout(function () { window.location = "/Appointment/Receipt/" + appointmentId; }, 5);
-
-                //swal({
-
-                //    position: 'top-end',
-
-                //    type: "success",
-
-                //    title: response.responseText,
-
-                //    showConfirmButton: false,
-
-                //}), setTimeout(function () { window.location = "/Appointment/Invoice/"; }, 3000);
 
             } else {
 
@@ -348,12 +378,6 @@ function SubmitAppointment() {
             }
         },
 
-        error: function (response) {
-            alert("error!");
-        },
-        complete: function () {
-            HideLoader();
-        }
     })
 
 }

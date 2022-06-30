@@ -85,7 +85,6 @@ namespace FertilityPoint.Controllers
         {
             try
             {
-
                 var timeslot = (await timeSlotRepository.GetAll()).Where(x => x.IsBooked == 0).OrderBy(x => x.FromTime).ToList();
 
                 return View(timeslot);
@@ -115,9 +114,18 @@ namespace FertilityPoint.Controllers
         }
         public async Task<IActionResult> Get()
         {
-            var app = await appointmentRepository.GetAll();
+            try
+            {
+                var app = await appointmentRepository.GetAll();
 
-            return Json(app);
+                return Json(app);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                return null;
+            }
         }
         public IActionResult Receipt(Guid Id)
         {
@@ -163,7 +171,6 @@ namespace FertilityPoint.Controllers
             }
             catch (Exception ex)
             {
-
                 Console.WriteLine(ex.Message);
 
                 return null;
@@ -172,61 +179,70 @@ namespace FertilityPoint.Controllers
         }
         public DataTable GetTransactionDetails(Guid Id)
         {
-            var data = appointmentRepository.GetTransaction(Id);
+            try
+            {
+                var data = appointmentRepository.GetTransaction(Id);
 
-            var dt = new DataTable();
+                var dt = new DataTable();
 
-            dt.Columns.Add("Id");
+                dt.Columns.Add("Id");
 
-            dt.Columns.Add("FullName");
+                dt.Columns.Add("FullName");
 
-            dt.Columns.Add("Email");
+                dt.Columns.Add("Email");
 
-            dt.Columns.Add("PhoneNumber");
+                dt.Columns.Add("PhoneNumber");
 
-            dt.Columns.Add("TimeSlot");
+                dt.Columns.Add("TimeSlot");
 
-            dt.Columns.Add("AppointmentDate");
+                dt.Columns.Add("AppointmentDate");
 
-            dt.Columns.Add("PaidByNumber");
+                dt.Columns.Add("PaidByNumber");
 
-            dt.Columns.Add("TransactionNumber");
+                dt.Columns.Add("TransactionNumber");
 
-            dt.Columns.Add("TransactionDate");
+                dt.Columns.Add("TransactionDate");
 
-            dt.Columns.Add("Amount");
+                dt.Columns.Add("Amount");
 
-            dt.Columns.Add("ReceiptNo");
+                dt.Columns.Add("ReceiptNo");
 
-            DataRow row;
+                DataRow row;
 
-            row = dt.NewRow();
+                row = dt.NewRow();
 
-            row["Id"] = data.Id.ToString().ToUpper();
+                row["Id"] = data.Id.ToString().ToUpper();
 
-            row["FullName"] = data.FullName.ToString();
+                row["FullName"] = data.FullName.ToString();
 
-            row["Email"] = data.Email.ToString();
+                row["Email"] = data.Email.ToString();
 
-            row["PhoneNumber"] = data.PhoneNumber.ToString();
+                row["PhoneNumber"] = data.PhoneNumber.ToString();
 
-            row["TimeSlot"] = data.TimeSlot.ToString();
+                row["TimeSlot"] = data.TimeSlot.ToString();
 
-            row["AppointmentDate"] = data.AppointmentDate.ToString();
+                row["AppointmentDate"] = data.AppointmentDate.ToString();
 
-            row["PaidByNumber"] = data.PaidByNumber.ToString();
+                row["PaidByNumber"] = data.PaidByNumber.ToString();
 
-            row["TransactionNumber"] = data.TransactionNumber.ToString();
+                row["TransactionNumber"] = data.TransactionNumber.ToString();
 
-            row["TransactionDate"] = data.TransactionDate.ToString();
+                row["TransactionDate"] = data.TransactionDate.ToString();
 
-            row["Amount"] = data.Amount.ToString("N");
+                row["Amount"] = data.Amount.ToString("N");
 
-            row["ReceiptNo"] = data.ReceiptNo.ToString();
+                row["ReceiptNo"] = data.ReceiptNo.ToString();
 
-            dt.Rows.Add(row);
+                dt.Rows.Add(row);
 
-            return dt;
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                return null;
+            }
         }
         public async Task<IActionResult> Create(AppointmentDTO appointmentDTO)
         {
@@ -335,12 +351,13 @@ namespace FertilityPoint.Controllers
                 return null;
             }
         }
-        public async Task<ActionResult> MpesaSTKPush(string PhoneNumber, Guid PatientId, Guid ServiceId)
-        {
 
+        [HttpPost]
+        public async Task<ActionResult> MpesaSTKPush(LipaMpesa lipaMpesa)
+        {
             try
             {
-                if (PhoneNumber == null || PhoneNumber == "")
+                if (lipaMpesa.PhoneNumber == null || lipaMpesa.PhoneNumber == "")
                 {
                     return Json(new { success = false, responseText = "Please Enter Phone Number" });
                 }
@@ -349,7 +366,7 @@ namespace FertilityPoint.Controllers
 
                 int amount = Convert.ToInt32(get_Service_Details.Amount);
 
-                var msisdn = formatPhoneNumber(PhoneNumber);
+                var msisdn = formatPhoneNumber(lipaMpesa.PhoneNumber);
 
                 string url = @"https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest";
 
@@ -413,8 +430,7 @@ namespace FertilityPoint.Controllers
 
                     CustomerMessage = mpesaExpressResponse.CustomerMessage,
                 };
-
-                mpesaResponse.PatientId = PatientId;
+                    
 
                 var h = await paymentRepository.SaveCheckoutRequest(mpesaResponse);
 
@@ -428,6 +444,7 @@ namespace FertilityPoint.Controllers
                 return Json(new
                 {
                     success = false,
+
                     responseText = "Payment request was not successfull ," +
 
                     " please check your mobile number and try again after 5 minutes or click on the Mpesa Paybill otpion and follow the payment procedure "
@@ -576,5 +593,12 @@ namespace FertilityPoint.Controllers
 
         }
 
+    }
+
+    public class LipaMpesa
+    {
+        public Guid PatientId { get; set; }
+        public string PhoneNumber { get; set; }
+        
     }
 }
