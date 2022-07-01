@@ -16,59 +16,54 @@
             <h1>Book Appointment</h1>
             <!-- One "tab" for each step in the form: -->
             <div class="tab">
-                <div class="main-wrapper">
-                    <div class="row mb-5">
-                        <div class="col-12">
-                            <div class="card booking-schedule schedule-widget">
 
-                                <div class="schedule-header">
-                                    <div class="date-booking">
-                                        <div class="row align-items-center">
+                <div class="card booking-schedule schedule-widget">
 
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label>Select Appointment Date</label>
-                                                    <input type="text" name="NewAppointmentDate" onchange="GetAppDate(this)" id="txtAppointmentDate" class="form-control" value='@DateTime.Now.ToString("MM/dd/yyyy")' autocomplete="off" />
+                    <div class="schedule-header">
+                        <div class="date-booking">
+                            <div class="row mt-2">
 
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div>
-
-                                                <div class="yyy">
-                                                    <div id="slots">
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-
-
-                                        <div id="divShowMessage" style="display:none;">
-                                            <div class="alert alert-danger" role="alert" id="error">
-                                                <div id="divmessage"></div>
-                                            </div>
-                                        </div>
-
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Select Appointment Date</label>
+                                        <input type="text" name="NewAppointmentDate" onchange="GetSlotsByDate(this)" id="txtAppointmentDate" class="form-control" value='@DateTime.Now.ToString("MM/dd/yyyy")' autocomplete="off" />
 
                                     </div>
                                 </div>
+@*
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Quick Search</label>
+                                        <select  class="form-control" onclick="GetSlotsByQuickSearch(this)" id="txtQuickSearch">
+                                            <option value="" selected disabled hidden>Click Here ...</option>
+                                            <option value="1">Today</option>
+                                    
+                                        </select>
+                                    </div>
+                                </div>*@
 
 
                             </div>
-
-
-
                         </div>
                     </div>
+
+
+                    <div class="schedule-header">
+                        <div class="row">
+                            <div id="slots">
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div id="divShowMessage" style="display:none;">
+                                <div class="alert alert-danger" role="alert" id="error">
+                                    <div id="divmessage"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
             </div>
@@ -124,7 +119,7 @@
 
                                                     <div class="payment-list">
                                                         <label class="payment-radio paypal-option">
-                                                            <input type="radio" name="radio" onclick="payBillSelected()">
+                                                            <input type="checkbox" name="radio" onclick="payBillSelected()">
                                                             <span class="checkmark"></span>
                                                             Mpesa Paybill
                                                         </label>
@@ -166,7 +161,7 @@
 
                                                 <div class="payment-list">
                                                     <label class="payment-radio credit-card-option">
-                                                        <input type="radio" name="radio" onclick="stkSelected()">
+                                                        <input type="checkbox" name="radio" onclick="stkSelected()">
                                                         <span class="checkmark"></span>
                                                         Mpesa Express (STK)
 
@@ -318,24 +313,24 @@
 
 <style>
 
+    .label {
+        border: 1px solid;
+        margin: 5px;
+        padding: 10px;
+        cursor: pointer;
+        width: 13rem;
+        color: #455A64;
+    }
 
-
-                     .label {
-                         border: 1px solid ;
-                         margin: 5px;
-                         padding: 10px;
-                         cursor: pointer;
-                         width: 13rem;
-                         color: #455A64;
-                     }
-
-                     .label input {
-                         position: absolute;
-                         display: none;
-                         color: #fff !important;
-                     }
-
+        .label input {
+            position: absolute;
+            display: none;
+            color: #fff !important;
+        }
 
 </style>
 
 
+<script>
+    $( "#txtAppointmentDate" ).datepicker({ minDate: 0});
+</script>

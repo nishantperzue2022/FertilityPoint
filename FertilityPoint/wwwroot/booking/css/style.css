@@ -126,9 +126,9 @@ input, button, a {
     min-height: 60px
 }
 
-.schedule-calendar-col .form-control {
+/*.schedule-calendar-col .form-control {
     width: 348px
-}
+}*/
 
 .table .form-control {
     font-size: 14px;
@@ -865,7 +865,7 @@ a.bg-danger:focus, a.bg-danger:hover, button.bg-danger:focus, button.bg-danger:h
 }
 
 .card {
-    border: 1px solid #ebebeb;
+    border: 1px solid #263b6b;
     border-radius: 8px;
     margin-bottom: 1.875rem
 }

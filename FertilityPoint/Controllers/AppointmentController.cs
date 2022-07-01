@@ -248,7 +248,7 @@ namespace FertilityPoint.Controllers
         {
             try
             {
-                var appointmentDate = appointmentDTO.NewAppointmentDate;               
+                var appointmentDate = appointmentDTO.NewAppointmentDate;
 
                 DateTime oDate = DateTime.ParseExact(appointmentDate, "M/d/yyyy", CultureInfo.InvariantCulture);
 
@@ -430,7 +430,7 @@ namespace FertilityPoint.Controllers
 
                     CustomerMessage = mpesaExpressResponse.CustomerMessage,
                 };
-                    
+
 
                 var h = await paymentRepository.SaveCheckoutRequest(mpesaResponse);
 
@@ -566,7 +566,7 @@ namespace FertilityPoint.Controllers
 
             var slotDate = todaysDate.Date;
 
-            var timeslot = (await timeSlotRepository.GetAll()).Where(x => x.IsBooked == 0 && x.AppointmentDate== slotDate).OrderBy(x => x.TimeSlot).ToList();
+            var timeslot = (await timeSlotRepository.GetAll()).Where(x => x.IsBooked == 0 && x.AppointmentDate == slotDate);
 
             return Json(timeslot.Select(x => new
             {
@@ -593,12 +593,26 @@ namespace FertilityPoint.Controllers
 
         }
 
+        public async Task<IActionResult> GetSlotsByQuickSearch(byte QuickSearch)
+        {
+            if (QuickSearch == 1)
+            {
+                return await GetSlots();
+            }
+            else
+            {
+                return await GetSlots();
+            }
+
+
+        }
+
     }
 
     public class LipaMpesa
     {
         public Guid PatientId { get; set; }
         public string PhoneNumber { get; set; }
-        
+
     }
 }

@@ -3,25 +3,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     $.ajax({
         type: "GET",
         url: "/Appointment/GetSlots/",
@@ -80,6 +61,9 @@
 
 });
 
+
+
+
 function IsRadioChecked() {
 
     $('input[type="radio"]').click(function () {
@@ -98,18 +82,12 @@ function IsRadioChecked() {
         label.css('background', '#0071dc');
         label.css('color', '#fff');
 
+        document.getElementById("nextBtn").style.display = "inline";
 
     });
 }
 
-
 function GetTimeSlotId() {
-
-
-
-
-
-
 
     var timeslotid = $('[id*="txtTime"]:checked').map(function () { return $(this).val().toString(); }).get().join(",");
 
@@ -140,7 +118,6 @@ function HideLoader() {
 
     $("#loadMe").modal('hide');
 }
-
 
 function stkSelected() {
 
@@ -230,9 +207,6 @@ function SendStkPush() {
     });
 }
 
-
-
-
 function SendStkPushOne() {
 
     if ($('#txtMpesaPhoneNumber').val() == '') {
@@ -284,9 +258,6 @@ function SendStkPushOne() {
 
                 $("#showError").text(response.responseText);
             }
-
-
-
         },
 
         error: function (response) {
@@ -300,8 +271,6 @@ function SendStkPushOne() {
 
 }
 
-
-
 function SubmitAppointment() {
 
     debugger
@@ -309,8 +278,6 @@ function SubmitAppointment() {
     var appdate = $('#txtAppointmentDate').val();
 
     console.log(appdate);
-
-
 
 
     if ($('#txtAppointmentDate').val() == '') {
@@ -482,7 +449,22 @@ function showTab(n) {
     x[n].style.display = "block";
     //... and fix the Previous/Next buttons:
     if (n == 0) {
+
         document.getElementById("prevBtn").style.display = "none";
+
+        var isSlotChecked = document.querySelector('input[name = "TimeId"]:checked');
+
+        console.log(isSlotChecked);
+
+        if (isSlotChecked == null) {  //Test if something was checked
+
+            document.getElementById("nextBtn").style.display = "none";
+
+        } else {
+            document.getElementById("nextBtn").style.display = "inline";
+        }
+
+
     } else {
         document.getElementById("prevBtn").style.display = "inline";
     }
@@ -498,6 +480,8 @@ function showTab(n) {
     fixStepIndicator(n)
 
     console.log(n);
+
+
 }
 
 function nextPrev(n) {
@@ -528,6 +512,7 @@ function nextPrev(n) {
         // ... the form gets submitted:
 
         console.log(currentTab);
+
 
 
         return false;
@@ -580,7 +565,7 @@ $(function () {
 
 
 
-function GetAppDate() {
+function GetSlotsByDate() {
 
     var date = $('#txtAppointmentDate').val();
 
@@ -649,3 +634,72 @@ function GetAppDate() {
 
 }
 
+function GetSlotsByQuickSearch() {
+
+    var search_value = $('#txtQuickSearch').val();
+
+    console.log(search_value)
+
+    //$("#txtAppDate").text(date);
+
+
+    $.ajax({
+        type: "GET",
+        url: "/Appointment/GetSlotsByQuickSearch?QuickSearch=" + search_value,
+        data: "{}",
+
+        success: function (data) {
+
+            var arr = data;
+
+            if (arr.length == 0) {
+
+
+                $('#slots').hide();
+
+                $('#divShowMessage').show();
+
+                $("#divmessage").html("Sorry ,there no slots on the selected date ,please select another date");
+            } else {
+
+                $('#slots').show();
+
+                $('#divShowMessage').hide();
+
+                $('#slots').empty();
+
+                $.each(arr, function (index, value) {
+
+                    //console.log('The value at arr [' + index + '] is : ' + value);
+
+
+                    console.log(value);
+
+                    let label = document.createElement("label");
+                    label.innerText = value.slotName;
+                    label.classList.add('btn');
+                    label.classList.add('btn-outline-primary');
+                    label.classList.add('label');
+
+                    let input = document.createElement("input");
+                    input.type = "radio";
+                    input.id = "txtTimeId";
+                    input.name = "TimeId";
+                    input.value = value.slotId;
+                    input.onchange = GetTimeSlotId;
+
+
+                    label.appendChild(input);
+                    slots.appendChild(label);
+
+                    IsRadioChecked();
+
+                });
+            }
+
+        }
+
+    });
+
+
+}
