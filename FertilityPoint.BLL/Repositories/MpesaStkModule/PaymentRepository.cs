@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FertilityPoint.DAL.Modules;
 using FertilityPoint.DAL.Utils;
+using FertilityPoint.DTO.MpesaC2BModule;
 using FertilityPoint.DTO.MpesaStkModule;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -48,7 +49,7 @@ namespace FertilityPoint.BLL.Repositories.MpesaStkModule
 
                                          TransactionDate = payment.TransactionDate,
 
-                                         FullName = patient.FirstName +" " + patient.LastName,
+                                         FullName = patient.FirstName + " " + patient.LastName,
 
                                      }).ToListAsync();
 
@@ -210,5 +211,20 @@ namespace FertilityPoint.BLL.Repositories.MpesaStkModule
             return exists;
         }
 
+        public void SaveLipaNaMpesa(CustomerToBusinessCallback customerToBusinessCallback)
+        {
+            var s = new PaybillPayment
+            {
+                FirstName = "Peter",
+
+                LastName = "Steve",
+
+                TransTime = DateTime.Now.ToString(),
+            };
+
+            context.PaybillPayments.Add(s);
+
+            context.SaveChanges();
+        }
     }
 }

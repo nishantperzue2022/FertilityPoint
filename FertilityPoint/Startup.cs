@@ -13,6 +13,7 @@ using FertilityPoint.DAL.Modules;
 using FertilityPoint.Extensions;
 using FertilityPoint.SeedAppUsers;
 using FertilityPoint.Services.EmailModule;
+using FertilityPoint.Services.MpesaC2BModule;
 using FertilityPoint.Services.SMSModule;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -26,6 +27,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -78,6 +80,11 @@ namespace FertilityPoint
 
             services.AddScoped<IServicesRepository, ServicesRepository>();
 
+            services.AddScoped<IMpesaClient, MpesaClient>();
+
+            services.AddMpesaService(Enums.Environment.Sandbox);
+
+            //services.AddMpesaService(Enums.Environment.Live);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,4 +1,5 @@
-﻿using FertilityPoint.DTO.MpesaStkModule;
+﻿using FertilityPoint.DTO.MpesaC2BModule;
+using FertilityPoint.DTO.MpesaStkModule;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -13,5 +14,6 @@ namespace FertilityPoint.BLL.Repositories.MpesaStkModule
         void SaveSTKCallBackResponse(MpesaPaymentDTO mpesaPaymentDTO);
         string GetTotalRevenue();
         bool IsTransactionExists(string TransactionNumber);
+        void SaveLipaNaMpesa(CustomerToBusinessCallback  customerToBusinessCallback);
     }
 }

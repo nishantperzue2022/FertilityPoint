@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FertilityPoint.DTO.Enumiration
+namespace FertilityPoint.DTO.MpesaC2BModule
 {
-    public enum CustomerToBusinessResponseType
+    public class CustomerToBusinessValidationCallback : CustomerToBusinessCallback
     {
-        Cancelled,
-        Completed
+
     }
 }

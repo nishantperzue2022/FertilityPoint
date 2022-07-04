@@ -22,6 +22,7 @@ namespace FertilityPoint.DAL.Modules
         public virtual DbSet<TimeSlot> TimeSlots { get; set; }
         public virtual DbSet<Patient> Patients { get; set; }
         public virtual DbSet<Service> Services { get; set; }
+        public virtual DbSet<PaybillPayment> PaybillPayments { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
